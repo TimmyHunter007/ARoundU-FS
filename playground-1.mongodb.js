@@ -41,3 +41,4 @@ db.getCollection('sales').aggregate([
   // Group the total sales for each product.
   { $group: { _id: '$item', totalSaleAmount: { $sum: { $multiply: [ '$price', '$quantity' ] } } } }
 ]);
+
