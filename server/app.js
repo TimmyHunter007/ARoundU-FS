@@ -16,7 +16,7 @@ app.use(express.static('public'));
 app.use('/api/events', require('./routes/eventRoutes'));
 app.get('/', (req, res) => 
 {
-    res.send('Welcome');
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 const PORT = process.env.PORT || 3000;
