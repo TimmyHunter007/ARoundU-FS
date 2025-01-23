@@ -1,5 +1,6 @@
-const axios = require('axios');
 /*
+const axios = require('axios');
+
 const getEvents = async (req, res) => 
 {
     const { location } = req.query;
