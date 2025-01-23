@@ -37,7 +37,7 @@ const axios = require('axios');
 require('dotenv').config(); // Load environment variables
 
 const getEvents = async (req, res) => {
-    const { location } = req.query;
+    const { location, radius = 10 } = req.query; // Default radius to 10 miles
 
     if (!location) {
         return res.status(400).json({ error: 'Location is required' });
@@ -45,25 +45,14 @@ const getEvents = async (req, res) => {
 
     try {
         const [latitude, longitude] = location.split(',');
-        const apiKey = process.env.TICKETMASTER_API_KEY;
-
-        // Log the API key and request URL for debugging
-        console.log('Ticketmaster API Key:', apiKey);
-        console.log(
-            'Request URL:',
-            `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${apiKey}&latlong=${latitude},${longitude}&radius=10&unit=miles`
-        );
-
         const response = await axios.get('https://app.ticketmaster.com/discovery/v2/events.json', {
             params: {
-                apikey: apiKey,
+                apikey: process.env.TICKETMASTER_API_KEY,
                 latlong: `${latitude},${longitude}`,
-                radius: 100,
+                radius: radius, // Use the radius from the query
                 unit: 'miles',
             },
         });
-
-        console.log('Ticketmaster API Response:', response.data);
 
         if (response.data && response.data._embedded && response.data._embedded.events) {
             const events = response.data._embedded.events.map((event) => ({
@@ -74,12 +63,13 @@ const getEvents = async (req, res) => {
             }));
             res.status(200).json({ events });
         } else {
-            res.status(200).json({ events: [] }); // No events found
+            res.status(200).json({ events: [] });
         }
     } catch (error) {
-        console.error('Error fetching events:', error.response?.data || error.message);
+        console.error('Error fetching events:', error.message);
         res.status(error.response?.status || 500).json({ error: error.message });
     }
 };
+
 
 module.exports = { getEvents };

@@ -14,6 +14,18 @@
 </head>
 <body>
     <h1>AroundU - Find Events Near You</h1>
+    <div id="controls">
+        <label for="city">City:</label>
+        <input type="text" id="city" placeholder="Enter City" />
+
+        <label for="state">City:</label>
+        <input type="text" id="state" placeholder="Enter state" />
+
+        <label for="radius">Miles:</label>
+        <input type="number" id="radius" min="1" max="100" value="10" />
+
+        <button onclick="updateMap()">Search</button>
+    </div>
     <div id="map"></div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJRa9QY6RF9ooPsZ1OpVNmMO6enp4mnqA&callback=initMap" async defer></script>
     <script src="scripts.js"></script>
