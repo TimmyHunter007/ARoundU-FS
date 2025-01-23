@@ -58,7 +58,7 @@ const getEvents = async (req, res) => {
             params: {
                 apikey: apiKey,
                 latlong: `${latitude},${longitude}`,
-                radius: 10,
+                radius: 100,
                 unit: 'miles',
             },
         });
