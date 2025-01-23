@@ -105,6 +105,7 @@ function updateDateTime() {
                     } else {
                         document.getElementById("current-time").innerText =
                             "Unable to fetch time zone information.";
+                        console.log("Fail Zone: 1 - If statement for Timezone");
                     }
                 } catch (error) {
                     console.error("Error fetching time zone information:", error);
