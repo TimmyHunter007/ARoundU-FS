@@ -3,6 +3,10 @@ const axios = require('axios');
 const getEvents = async (req, res) => 
 {
     const { location } = req.query;
+    if (!location) 
+    {
+        return res.status(400).json({ error: 'Location is required' });
+    }
     try 
     {
         const response = await axios.get('https://www.eventbriteapi.com/v3/events/search/', 
