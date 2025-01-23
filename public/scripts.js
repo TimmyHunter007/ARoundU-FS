@@ -82,7 +82,7 @@ function updateDateTime() {
 
                 try {
                     const timezoneResponse = await fetch(
-                        `https://maps.googleapis.com/maps/api/timezone/json?location=${latitude},${longitude}&timestamp=${Math.floor(Date.now() / 1000)}&key=YOUR_GOOGLE_MAPS_API_KEY`
+                        `https://maps.googleapis.com/maps/api/timezone/json?location=${latitude},${longitude}&timestamp=${Math.floor(Date.now() / 1000)}&key=AIzaSyDJRa9QY6RF9ooPsZ1OpVNmMO6enp4mnqA`
                     );
                     const timezoneData = await timezoneResponse.json();
 
