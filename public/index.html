@@ -14,14 +14,22 @@
 </head>
 <body>
     <h1>AroundU - Find Events Near You</h1>
+    <div id="location-info">
+        <p id="current-time">Fetching current date and time . . .</p>
+    </div>
     <div id="controls">
         <div>
-            City: <input id="city" type="text" placeholder="Enter City">
-            State: <input id="state" type="text" placeholder="Enter State">
-            Miles: <input id="radius" type="number" placeholder="10">
+            <label for="city">City:</label>
+            <input id="city" type="text" placeholder="Enter City">
+
+            <label for="state">State:</label>
+            <input id="state" type="text" placeholder="Enter State">
+
+            <label for="radius">Miles:</label>
+            <input id="radius" type="number" placeholder="10">
+            
             <button id="searchBtn">Search</button>
-        </div>
-        
+        </div>  
     </div>
     <div id="map"></div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJRa9QY6RF9ooPsZ1OpVNmMO6enp4mnqA&callback=initMap" async defer></script>

@@ -72,3 +72,42 @@ function fetchEvents(latitude, longitude, radius) {
             alert('Unable to fetch events at the moment. Please try again later.');
         });
 }
+
+// Function to update the current date and time based on user's geolocation
+function updateDateTime() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+
+                // Use the Intl.DateTimeFormat API to format the local time
+                const options = { timeZoneName: 'short', hour12: true };
+                const dateFormatter = new Intl.DateTimeFormat('en-US', {
+                    timeZone: `Etc/GMT${-Math.round(longitude / 15)}`,
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric',
+                });
+
+                const currentTime = dateFormatter.format(new Date());
+
+                document.getElementById('current-time').innerText = `Current Date & Time: ${currentTime}`;
+            },
+            (error) => {
+                console.error('Error getting location:', error.message);
+                document.getElementById('current-time').innerText =
+                    'Unable to fetch location for time information.';
+            }
+        );
+    } else {
+        document.getElementById('current-time').innerText =
+            'Geolocation is not supported by your browser.';
+    }
+}
+
+// Call the function to update date and time on page load
+updateDateTime();
