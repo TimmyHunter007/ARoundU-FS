@@ -34,10 +34,9 @@ const getEvents = async (req, res) =>
 module.exports = { getEvents };
 */
 const axios = require('axios');
-require('dotenv').config(); // Load environment variables
 
 const getEvents = async (req, res) => {
-    const { location, radius = 10 } = req.query; // Default radius to 10 miles
+    const { location, radius } = req.query;
     if (!location) {
         return res.status(400).json({ error: 'Location is required' });
     }
@@ -48,7 +47,7 @@ const getEvents = async (req, res) => {
             params: {
                 apikey: process.env.TICKETMASTER_API_KEY,
                 latlong: `${latitude},${longitude}`,
-                radius,
+                radius: radius || 10, // Default radius to 10 miles
                 unit: 'miles',
             },
         });
