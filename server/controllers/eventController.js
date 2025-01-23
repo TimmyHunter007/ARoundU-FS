@@ -42,22 +42,29 @@ const getEvents = async (req, res) => {
     }
 
     try {
-        // Split location into latitude and longitude
         const [latitude, longitude] = location.split(',');
-
-        // Call Ticketmaster's Discovery API for events
         const response = await axios.get('https://app.ticketmaster.com/discovery/v2/events.json', {
             params: {
-                apikey: process.env.TICKETMASTER_CONSUMER_KEY, // Ticketmaster API Key
+                apikey: process.env.TICKETMASTER_API_KEY, // Ensure this environment variable is set
                 latlong: `${latitude},${longitude}`,
-                radius: 25, // Radius in miles
-                unit: 'miles',
-                size: 10, // Number of events
+                radius: 10, // Adjust the search radius if necessary
+                unit: 'miles', // Use 'km' for kilometers
             },
         });
 
-        // Respond with the data
-        res.status(200).json(response.data);
+        console.log('Ticketmaster API Response:', response.data); // Debugging
+
+        if (response.data && response.data._embedded && response.data._embedded.events) {
+            const events = response.data._embedded.events.map((event) => ({
+                name: event.name,
+                latitude: parseFloat(event._embedded.venues[0].location.latitude),
+                longitude: parseFloat(event._embedded.venues[0].location.longitude),
+                description: event.info || 'No description available',
+            }));
+            res.status(200).json({ events });
+        } else {
+            res.status(200).json({ events: [] }); // No events found
+        }
     } catch (error) {
         console.error('Error fetching events:', error.message);
         res.status(error.response?.status || 500).json({ error: error.message });
