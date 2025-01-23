@@ -10,13 +10,14 @@ connectDB();
 
 // Middleware
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static('public')); // Serve static files (CSS, JS, HTML)
 
 // Routes
 app.use('/api/events', require('./routes/eventRoutes'));
-app.get('/', (req, res) => 
-{
-    res.sendFile(process.cwd() + '/public/index.html');
+
+// Serve index.html for the root route
+app.get('/', (req, res) => {
+    res.sendFile(process.cwd() + '/public/index.html'); // Serve the HTML file
 });
 
 const PORT = process.env.PORT || 3000;
