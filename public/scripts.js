@@ -77,35 +77,50 @@ function fetchEvents(latitude, longitude, radius) {
 function updateDateTime() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-            (position) => {
+            async (position) => {
                 const { latitude, longitude } = position.coords;
 
-                // Use the Intl.DateTimeFormat API to format the local time
-                const options = { timeZoneName: 'short', hour12: true };
-                const dateFormatter = new Intl.DateTimeFormat('en-US', {
-                    timeZone: `Etc/GMT${-Math.round(longitude / 15)}`,
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    second: 'numeric',
-                });
+                try {
+                    const timezoneResponse = await fetch(
+                        `https://maps.googleapis.com/maps/api/timezone/json?location=${latitude},${longitude}&timestamp=${Math.floor(Date.now() / 1000)}&key=YOUR_GOOGLE_MAPS_API_KEY`
+                    );
+                    const timezoneData = await timezoneResponse.json();
 
-                const currentTime = dateFormatter.format(new Date());
+                    if (timezoneData.status === "OK") {
+                        const options = {
+                            timeZone: timezoneData.timeZoneId,
+                            weekday: "long",
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "numeric",
+                            second: "numeric",
+                        };
 
-                document.getElementById('current-time').innerText = `Current Date & Time: ${currentTime}`;
+                        const dateFormatter = new Intl.DateTimeFormat("en-US", options);
+                        const currentTime = dateFormatter.format(new Date());
+
+                        document.getElementById("current-time").innerText = `Current Date & Time: ${currentTime}`;
+                    } else {
+                        document.getElementById("current-time").innerText =
+                            "Unable to fetch time zone information.";
+                    }
+                } catch (error) {
+                    console.error("Error fetching time zone information:", error);
+                    document.getElementById("current-time").innerText =
+                        "Unable to fetch time zone information.";
+                }
             },
             (error) => {
-                console.error('Error getting location:', error.message);
-                document.getElementById('current-time').innerText =
-                    'Unable to fetch location for time information.';
+                console.error("Error getting location:", error.message);
+                document.getElementById("current-time").innerText =
+                    "Unable to fetch location for time information.";
             }
         );
     } else {
-        document.getElementById('current-time').innerText =
-            'Geolocation is not supported by your browser.';
+        document.getElementById("current-time").innerText =
+            "Geolocation is not supported by your browser.";
     }
 }
 
