@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AroundU</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>AroundU - Find Events Near You</h1>
+    <div id="map"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJRa9QY6RF9ooPsZ1OpVNmMO6enp4mnqA&callback=initMap" async defer></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
