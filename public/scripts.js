@@ -19,7 +19,7 @@ function initMap() {
 
             if (city && state) {
                 // Use Google Maps Geocoding API to get coordinates
-                const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${city},${state}&key=YOUR_GOOGLE_MAPS_API_KEY`;
+                const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${city},${state}&key=AIzaSyDJRa9QY6RF9ooPsZ1OpVNmMO6enp4mnqA`;
                 fetch(geocodeUrl)
                     .then((response) => response.json())
                     .then((data) => {
