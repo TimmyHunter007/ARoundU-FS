@@ -19,6 +19,7 @@
   "homepage": "https://github.com/TimmyHunter007/ARoundU-FS#readme",
   "description": "",
   "dependencies": {
+    "axios": "^1.7.9",
     "body-parser": "^1.20.3",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
