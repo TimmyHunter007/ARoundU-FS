@@ -63,6 +63,7 @@ function fetchEvents(latitude, longitude, radius) {
                         infoWindow.open(map, marker);
                     });
 
+                    const eventsContainer = document.getElementById('events-container');
                     const eventDiv = document.createElement("div");
                     eventDiv.className = "event";
                     eventDiv.innerHTML = `
