@@ -56,6 +56,8 @@ const getEvents = async (req, res) => {
         if (response.data && response.data._embedded && response.data._embedded.events) {
             const events = response.data._embedded.events.map((event) => ({
                 name: event.name,
+                date: event.dates.start.localDate || "Date not available",
+                time: event.dates.start.localTime || "Time not available",
                 latitude: parseFloat(event._embedded.venues[0].location.latitude),
                 longitude: parseFloat(event._embedded.venues[0].location.longitude),
                 description: event.info || 'No description available',
