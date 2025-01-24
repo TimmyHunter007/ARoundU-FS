@@ -62,9 +62,19 @@ function fetchEvents(latitude, longitude, radius) {
                     marker.addListener('click', () => {
                         infoWindow.open(map, marker);
                     });
+
+                    const eventDiv = document.createElement("div");
+                    eventDiv.className = "event";
+                    eventDiv.innerHTML = `
+                        <h3>${event.name}</h3>
+                        <p>${event.description}</p>
+                        <p><strong>Latitude:</strong> ${event.latitude}, <strong>Longitude:</strong> ${event.longitude}</p>
+                    `;
+                    eventsContainer.appendChild(eventDiv);
                 });
             } else {
                 alert('No events found!');
+                eventsContainer.innerHTML = "<p>No events found in the selected area.</p>";
             }
         })
         .catch((error) => {
@@ -95,7 +105,6 @@ function updateDateTime() {
                             day: "numeric",
                             hour: "numeric",
                             minute: "numeric",
-                            second: "numeric",
                         };
 
                         const dateFormatter = new Intl.DateTimeFormat("en-US", options);
