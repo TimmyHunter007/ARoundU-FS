@@ -44,6 +44,9 @@ function initMap() {
 }
 
 function fetchEvents(latitude, longitude, radius) {
+    const eventsContainer = document.getElementById('events-container');
+    eventsContainer.innerHTML = '';
+
     fetch(`/api/events?location=${latitude},${longitude}&radius=${radius}`)
         .then((response) => response.json())
         .then((data) => {
@@ -63,14 +66,17 @@ function fetchEvents(latitude, longitude, radius) {
                         infoWindow.open(map, marker);
                     });
 
-                    const eventsContainer = document.getElementById('events-container');
-                    const eventDiv = document.createElement("div");
+                    const eventDiv = document.createElement('div');
                     eventDiv.className = "event";
+
+                    const eventDate = event.date ? event.date : "Date not available";
+                    const eventTime = event.time ? event.time : "Time not available";
+
                     eventDiv.innerHTML = `
-                        <h3>${event.name}</h3>
+                        <h3>${event.name} | ${eventDate} ${eventTime}</h3>
                         <p>${event.description}</p>
-                        <p><strong>Latitude:</strong> ${event.latitude}, <strong>Longitude:</strong> ${event.longitude}</p>
                     `;
+
                     eventsContainer.appendChild(eventDiv);
                 });
             } else {
