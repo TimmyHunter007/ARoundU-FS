@@ -1,32 +1,21 @@
 let map;
-let markers = []; // To store the markers for cleanup
 
 function initMap() {
     navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
         const defaultCenter = { lat: latitude, lng: longitude };
-        const defaultRadius = 10; // Default radius in miles
-
         map = new google.maps.Map(document.getElementById('map'), {
             center: defaultCenter,
             zoom: 10,
         });
 
-        // Fetch initial events for the default location
-        fetchEvents(defaultCenter.lat, defaultCenter.lng, defaultRadius);
-
-        // Add listener for map drag or zoom
-        map.addListener('idle', () => {
-            const center = map.getCenter();
-            const radius = document.getElementById('radius').value || defaultRadius;
-
-            fetchEvents(center.lat(), center.lng(), radius);
-        });
+        // Fetch events for the default location
+        fetchEvents(defaultCenter.lat, defaultCenter.lng, 10);
 
         document.getElementById('searchBtn').addEventListener('click', () => {
             const city = document.getElementById('city').value.trim();
             const state = document.getElementById('state').value.trim();
-            const radius = document.getElementById('radius').value || defaultRadius;
+            const radius = document.getElementById('radius').value || 10;
 
             if (city && state) {
                 // Use Google Maps Geocoding API to get coordinates
@@ -56,24 +45,18 @@ function initMap() {
 
 function fetchEvents(latitude, longitude, radius) {
     const eventsContainer = document.getElementById('events-container');
-    eventsContainer.innerHTML = ''; // Clear previous events
-
-    // Remove existing markers
-    markers.forEach((marker) => marker.setMap(null));
-    markers = []; // Reset markers array
+    eventsContainer.innerHTML = '';
 
     fetch(`/api/events?location=${latitude},${longitude}&radius=${radius}`)
         .then((response) => response.json())
         .then((data) => {
             if (data.events && data.events.length > 0) {
                 data.events.forEach((event) => {
-                    // Add marker to map
                     const marker = new google.maps.Marker({
                         position: { lat: event.latitude, lng: event.longitude },
                         map,
                         title: event.name,
                     });
-                    markers.push(marker); // Store marker for cleanup
 
                     const infoWindow = new google.maps.InfoWindow({
                         content: `<h3>${event.name}</h3><p>${event.description}</p>`,
@@ -83,12 +66,11 @@ function fetchEvents(latitude, longitude, radius) {
                         infoWindow.open(map, marker);
                     });
 
-                    // Add event details to the events container
                     const eventDiv = document.createElement('div');
-                    eventDiv.className = 'event';
+                    eventDiv.className = "event";
 
-                    const eventDate = event.date ? event.date : 'Date not available';
-                    const eventTime = event.time ? event.time : 'Time not available';
+                    const eventDate = event.date ? event.date : "Date not available";
+                    const eventTime = event.time ? event.time : "Time not available";
 
                     eventDiv.innerHTML = `
                         <h3>${event.name} | ${eventDate} ${eventTime}</h3>
@@ -98,7 +80,8 @@ function fetchEvents(latitude, longitude, radius) {
                     eventsContainer.appendChild(eventDiv);
                 });
             } else {
-                eventsContainer.innerHTML = '<p>No events found in the selected area.</p>';
+                alert('No events found!');
+                eventsContainer.innerHTML = "<p>No events found in the selected area.</p>";
             }
         })
         .catch((error) => {
