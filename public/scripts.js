@@ -79,7 +79,7 @@ function fetchEvents(latitude, longitude, radius) {
                         <p>${event.description}</p>
                     `;
 
-                    eventsContainer.appendChild(eventDiv);
+                    //eventsContainer.appendChild(eventDiv);
                     eventsContainer.appendChild(eventCard);
                 });
             } else {
