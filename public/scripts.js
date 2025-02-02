@@ -66,20 +66,17 @@ function fetchEvents(latitude, longitude, radius) {
                         infoWindow.open(map, marker);
                     });
 
-                    const eventDiv = document.createElement('div');
                     const eventCard = document.createElement('div');
-                    eventDiv.className = "event";
                     eventCard.className = "card";
 
                     const eventDate = event.date ? event.date : "Date not available";
                     const eventTime = event.time ? event.time : "Time not available";
 
-                    eventDiv.innerHTML = `
+                    eventCard.innerHTML = `
                         <h3>${event.name} | ${eventDate} ${eventTime}</h3>
                         <p>${event.description}</p>
                     `;
 
-                    //eventsContainer.appendChild(eventDiv);
                     eventsContainer.appendChild(eventCard);
                 });
             } else {
