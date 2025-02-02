@@ -73,7 +73,7 @@ function fetchEvents(latitude, longitude, radius) {
                     const eventTime = event.time ? event.time : "Time not available";
 
                     eventCard.innerHTML = `
-                        <h3>${event.name} | ${eventDate} ${eventTime}</h3>
+                        <h3>${event.name}</h3> <hr> <h4>${eventDate} ${eventTime}</h4>
                         <p>${event.description}</p>
                     `;
 
