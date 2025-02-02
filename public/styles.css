@@ -19,36 +19,20 @@ h1 {
 }
 
 #events-container {
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
-}
-
-.event {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-}
-
-.event h3 {
-    margin: 0 0 5px;
-}
-
-.event p {
-    margin: 5px 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 .card {
-    margin: 15px auto;
-    max-width: 600px;
-    padding: 15px;
+    background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
-    background-color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    padding: 15px;
 }
 
 .card h3 {
