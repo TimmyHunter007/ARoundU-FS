@@ -67,7 +67,9 @@ function fetchEvents(latitude, longitude, radius) {
                     });
 
                     const eventDiv = document.createElement('div');
+                    const eventCard = document.createElement('div');
                     eventDiv.className = "event";
+                    eventCard.className = "card";
 
                     const eventDate = event.date ? event.date : "Date not available";
                     const eventTime = event.time ? event.time : "Time not available";
@@ -78,6 +80,7 @@ function fetchEvents(latitude, longitude, radius) {
                     `;
 
                     eventsContainer.appendChild(eventDiv);
+                    eventsContainer.appendChild(eventCard);
                 });
             } else {
                 alert('No events found!');
