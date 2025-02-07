@@ -117,7 +117,7 @@ function updateDateTime() {
                         const dateFormatter = new Intl.DateTimeFormat("en-US", options);
                         const currentTime = dateFormatter.format(new Date());
 
-                        document.getElementById("current-time").innerText = `Current Date & Time: ${currentTime}`;
+                        document.getElementById("current-time").innerText = `${currentTime}`;
                     } else {
                         document.getElementById("current-time").innerText =
                             "Unable to fetch time zone information.";
