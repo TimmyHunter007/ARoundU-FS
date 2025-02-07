@@ -32,7 +32,7 @@ function initMap() {
                         if (data.results && data.results.length > 0) {
                             const location = data.results[0].geometry.location;
                             map.setCenter(location);
-                            fetchEvents(location.lat, location.lng, radius);
+                            fetchEvents(location.lat, location.lng, radius, {});
                         } else {
                             alert('Location not found!');
                         }
