@@ -8,7 +8,7 @@
     <body>
 
         <header class="main-header">
-            <h1>AroundU - Find Events Near You</h1>
+            <h1>AroundU - Find Events Near You, And Beyond</h1>
             <p id="current-time">Current Date & Time: ...</p>
         </header>
 
@@ -37,17 +37,55 @@
                 <div id="map"></div>
             </div>
 
-            <!-- Filter Panel (Placeholder for future features) -->
+            <!-- Filter Panel -->
             <div class="filter-panel">
                 <h2>Filter</h2>
-                <!-- Add filter controls later -->
-                <p>Type: (Coming soon)</p>
-                <p>Time: (Coming soon)</p>
+
+                <div class="filter-fields">
+                    <!-- Date Range -->
+                    <div class="filter-section">
+                        <h3>Date Range</h3>
+                        <label for="start-date">Start</label>
+                        <input type="date" id="start-date" />
+
+                        <label for="end-date">End</label>
+                        <input type="date" id="end-date" />
+                    </div>
+
+                    <!-- Event Type -->
+                    <div class="filter-section">
+                        <h3>Event Type</h3>
+                        <select id="event-type">
+                        <option value="">All Types</option>
+                        <!-- Future: Populate these from Ticketmaster categories -->
+                        <option value="music">Music</option>
+                        <option value="sports">Sports</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="theater">Theater</option>
+                        </select>
+                    </div>
+
+                    <!-- Time of Event -->
+                    <div class="filter-section">
+                        <h3>Time of Event</h3>
+                        <select id="time-of-day">
+                        <option value="">Any Time</option>
+                        <option value="morning">Morning (6am - 12pm)</option>
+                        <option value="afternoon">Afternoon (12pm - 6pm)</option>
+                        <option value="evening">Evening (6pm - 10pm)</option>
+                        <option value="late-night">Late Night (10pm - 6am)</option>
+                        </select>
+                    </div>
+
+                    <!-- Future: Apply Filters Button -->
+                    <button id="applyFilterBtn">Apply Filter</button>
+                </div><!-- /.filter-fields -->
+
             </div>
 
-            <!-- Events Row -->
+                <!-- Events Row -->
             <div class="events-container" id="events-container">
-            <!-- Populated dynamically via JS -->
+                <!-- Populated dynamically via JS -->
             </div>
 
         </div><!-- /.layout-container -->
