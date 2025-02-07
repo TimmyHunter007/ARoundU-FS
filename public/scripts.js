@@ -10,7 +10,7 @@ function initMap() {
         });
 
         // Fetch events for the default location
-        fetchEvents(defaultCenter.lat, defaultCenter.lng, 10);
+        fetchEvents(defaultCenter.lat, defaultCenter.lng, 10, {});
 
         document.getElementById('searchBtn').addEventListener('click', () => {
             const city = document.getElementById('city').value.trim();
