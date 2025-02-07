@@ -17,6 +17,12 @@ function initMap() {
             const state = document.getElementById('state').value.trim();
             const radius = document.getElementById('radius').value || 10;
 
+            // Filter options
+            const startDate = document.getElementById('start-date')?.value || '';
+            const endDate = document.getElementById('end-date')?.value || '';
+            const eventType = document.getElementById('event-type')?.value || '';
+            const timeOfDay = document.getElementById('time-of-day')?.value || '';
+
             if (city && state) {
                 // Use Google Maps Geocoding API to get coordinates
                 const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${city},${state}&key=AIzaSyDJRa9QY6RF9ooPsZ1OpVNmMO6enp4mnqA`;
@@ -37,17 +43,29 @@ function initMap() {
                     });
             } else {
                 // Use current location if no city/state provided
-                fetchEvents(defaultCenter.lat, defaultCenter.lng, radius);
+                fetchEvents(defaultCenter.lat, defaultCenter.lng, radius, {
+                    startDate,
+                    endDate,
+                    eventType,
+                    timeOfDay,
+                });
             }
         });
     });
 }
 
-function fetchEvents(latitude, longitude, radius) {
+function fetchEvents(latitude, longitude, radius, filters) {
     const eventsContainer = document.getElementById('events-container');
     eventsContainer.innerHTML = '';
 
-    fetch(`/api/events?location=${latitude},${longitude}&radius=${radius}`)
+    // Build the query string
+    let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
+    if (filters.startDate)  url += `&startDate=${filters.startDate}`;
+    if (filters.endDate)    url += `&endDate=${filters.endDate}`;
+    if (filters.eventType)  url += `&eventType=${filters.eventType}`;
+    if (filters.timeOfDay)  url += `&timeOfDay=${filters.timeOfDay}`;
+
+    fetch(url)
         .then((response) => response.json())
         .then((data) => {
             if (data.events && data.events.length > 0) {
