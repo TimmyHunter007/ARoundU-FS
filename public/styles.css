@@ -1,44 +1,69 @@
+/* Global */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
     margin: 0;
-    padding: 0;
-}
-
-h1 {
-    margin: 20px 0;
-    color: #333;
-}
-
-#map {
-    height: 500px; /* Adjust as needed */
-    width: 100%;
-    margin: 0 auto;
-    border: 2px solid #ddd;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#events-container {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Layout Container */
+  .layout-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 250px 1fr 250px; /* Left, center, right widths */
+    grid-template-rows: auto 1fr; /* 1st row for search/map/filter, 2nd row for events */
+    grid-template-areas:
+      "search map filter"
+      "events events events";
     gap: 20px;
-    max-width: 1400px;
-    margin: 0 auto;
     padding: 20px;
-}
-
-.card {
-    background-color: #fff;
+  }
+  
+  /* Search panel on the left */
+  .search-panel {
+    grid-area: search;
     border: 1px solid #ccc;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
     padding: 15px;
-}
-
-.card h3,h4 {
-    margin: 0 0 10px;
-}
-
-.card p {
-    margin: 0;
-}
+    background-color: #f8f8f8;
+  }
+  
+  /* Map in the center */
+  .map-wrapper {
+    grid-area: map;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0; /* The map itself can fill the space */
+    position: relative;
+  }
+  
+  #map {
+    width: 100%;
+    height: 100%;
+    min-height: 400px; /* ensure the map has a visible height */
+  }
+  
+  /* Filter panel on the right */
+  .filter-panel {
+    grid-area: filter;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #f8f8f8;
+  }
+  
+  /* Events below, spanning all columns */
+  .events-container {
+    grid-area: events;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  /* Optional styling for each event card */
+  .events-container .card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  }
+  
