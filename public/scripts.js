@@ -32,15 +32,13 @@ function initMap() {
             if (radius > 300) radius = 300;
 
             // Gather filter options
-            const startDate = document.getElementById("start-date")?.value || "";
-            const endDate = document.getElementById("end-date")?.value || "";
+            const singleDate = document.getElementById("single-date")?.value || "";
             const eventType = document.getElementById("event-type")?.value || "";
             const timeOfDay = document.getElementById("time-of-day")?.value || "";
 
             // Fetch events with the user's stored coords + filters
             fetchEvents(userLat, userLng, radius, {
-                startDate,
-                endDate,
+                singleDate,
                 eventType,
                 timeOfDay,
             });
@@ -89,8 +87,7 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
 
     // Build the query string
     let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
-    if (filters.startDate) url += `&startDate=${filters.startDate}`;
-    if (filters.endDate) url += `&endDate=${filters.endDate}`;
+    if (filters.singleDate) url += `&singleDate=${filters.singleDate}`;
     if (filters.eventType) url += `&eventType=${filters.eventType}`;
     if (filters.timeOfDay) url += `&timeOfDay=${filters.timeOfDay}`;
 
