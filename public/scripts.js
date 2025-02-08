@@ -171,7 +171,7 @@ function updateDateTime() {
                 try {
                     const timestamp = Math.floor(Date.now() / 1000);
                     const response = await fetch(
-                    `https://maps.googleapis.com/maps/api/timezone/json?location=${latitude},${longitude}&timestamp=${timestamp}&key=YOUR_GOOGLE_MAPS_API_KEY`
+                    `https://maps.googleapis.com/maps/api/timezone/json?location=${latitude},${longitude}&timestamp=${timestamp}&key=AIzaSyDJRa9QY6RF9ooPsZ1OpVNmMO6enp4mnqA`
                     );
                     const data = await response.json();
                     if (data.status === "OK") {
