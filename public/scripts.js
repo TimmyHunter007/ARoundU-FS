@@ -31,8 +31,19 @@ function initMap() {
             if (radius < 0) radius = 0;
             if (radius > 300) radius = 300;
 
+            let rawDate = document.getElementById("single-date")?.value.trim() || "";
+            if (rawDate) {
+                const parsed = new Date(rawDate);
+                if (!isNaN(parsed.getTime())) {
+                    const year = parsed.getFullYear();
+                    const month = String(parsed.getMonth() + 1).padStart(2, "0");
+                    const day = String(parsed.getDate()).padStart(2, "0");
+                } else {
+                    rawDate = "";
+                }
+            }
+
             // Gather filter options
-            const singleDate = document.getElementById("single-date")?.value || "";
             const eventType = document.getElementById("event-type")?.value || "";
             const timeOfDay = document.getElementById("time-of-day")?.value || "";
 
