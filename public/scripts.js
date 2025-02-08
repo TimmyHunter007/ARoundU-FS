@@ -49,7 +49,7 @@ function initMap() {
 
             // Fetch events with the user's stored coords + filters
             fetchEvents(userLat, userLng, radius, {
-                singleDate,
+                singleDate: rawDate,
                 eventType,
                 timeOfDay,
             });
