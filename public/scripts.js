@@ -1,62 +1,56 @@
 let map;
+let userLat;
+let userLng;
 
+/**
+ * Initialize the Google Map, get user location, and set up event listeners.
+ */
 function initMap() {
     navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        const defaultCenter = { lat: latitude, lng: longitude };
+        // Store user coordinates in global vars so we can re-use them later
+        userLat = position.coords.latitude;
+        userLng = position.coords.longitude;
+
+        const defaultCenter = { lat: userLat, lng: userLng };
+
         map = new google.maps.Map(document.getElementById('map'), {
             center: defaultCenter,
             zoom: 10,
         });
 
-        // Fetch events for the default location
-        fetchEvents(defaultCenter.lat, defaultCenter.lng, 10, {});
+        // Fetch events for the default location with no filters
+        fetchEvents(userLat, userLng, 10, {});
 
+        // When the user clicks "Search," use their geolocation + any filters
         document.getElementById('searchBtn').addEventListener('click', () => {
-            const city = document.getElementById('city').value.trim();
-            const state = document.getElementById('state').value.trim();
-            const radius = document.getElementById('radius').value || 10;
+            // Clamp radius to [0, 300]
+            let radius = parseFloat(document.getElementById('radius').value) || 10;
+            if (radius < 0) radius = 0;
+            if (radius > 300) radius = 300;
 
-            // Filter options
+            // Gather filter options
             const startDate = document.getElementById('start-date')?.value || '';
             const endDate = document.getElementById('end-date')?.value || '';
             const eventType = document.getElementById('event-type')?.value || '';
             const timeOfDay = document.getElementById('time-of-day')?.value || '';
 
-            if (city && state) {
-                // Use Google Maps Geocoding API to get coordinates
-                const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${city},${state}&key=AIzaSyDJRa9QY6RF9ooPsZ1OpVNmMO6enp4mnqA`;
-                fetch(geocodeUrl)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.results && data.results.length > 0) {
-                            const location = data.results[0].geometry.location;
-                            map.setCenter(location);
-                            fetchEvents(location.lat, location.lng, radius, {});
-                        } else {
-                            alert('Location not found!');
-                        }
-                    })
-                    .catch((error) => {
-                        console.error('Error fetching location:', error);
-                        alert('Error fetching location. Please try again.');
-                    });
-            } else {
-                // Use current location if no city/state provided
-                fetchEvents(defaultCenter.lat, defaultCenter.lng, radius, {
-                    startDate,
-                    endDate,
-                    eventType,
-                    timeOfDay,
-                });
-            }
+            // Simply call fetchEvents with the user's stored coords
+            fetchEvents(userLat, userLng, radius, {
+                startDate,
+                endDate,
+                eventType,
+                timeOfDay,
+            });
         });
     });
 }
 
-function fetchEvents(latitude, longitude, radius, filters) {
+/**
+ * Fetches events from our server with optional filters, then displays them.
+ */
+function fetchEvents(latitude, longitude, radius, filters = {}) {
     const eventsContainer = document.getElementById('events-container');
-    eventsContainer.innerHTML = '';
+    eventsContainer.innerHTML = ''; // Clear any existing events
 
     // Build the query string
     let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
@@ -70,12 +64,14 @@ function fetchEvents(latitude, longitude, radius, filters) {
         .then((data) => {
             if (data.events && data.events.length > 0) {
                 data.events.forEach((event) => {
+                    // Create marker
                     const marker = new google.maps.Marker({
                         position: { lat: event.latitude, lng: event.longitude },
                         map,
                         title: event.name,
                     });
 
+                    // Info Window
                     const infoWindow = new google.maps.InfoWindow({
                         content: `<h3>${event.name}</h3><p>${event.description}</p>`,
                     });
@@ -84,14 +80,17 @@ function fetchEvents(latitude, longitude, radius, filters) {
                         infoWindow.open(map, marker);
                     });
 
+                    // Build card
                     const eventCard = document.createElement('div');
                     eventCard.className = "card";
 
-                    const eventDate = event.date ? event.date : "Date not available";
-                    const eventTime = event.time ? event.time : "Time not available";
+                    const eventDate = event.date || "Date not available";
+                    const eventTime = event.time || "Time not available";
 
                     eventCard.innerHTML = `
-                        <h3>${event.name}</h3> <hr> <h4>${eventDate} ${eventTime}</h4>
+                        <h3>${event.name}</h3>
+                        <hr>
+                        <h4>${eventDate} ${eventTime}</h4>
                         <p>${event.description}</p>
                     `;
 
@@ -108,22 +107,24 @@ function fetchEvents(latitude, longitude, radius, filters) {
         });
 }
 
-// Function to update the current date and time based on user's geolocation
+/**
+ * Updates the current date and time based on user’s geolocation.
+ * (Optional if you still want to show local date/time info)
+ */
 function updateDateTime() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             async (position) => {
                 const { latitude, longitude } = position.coords;
-
                 try {
-                    const timezoneResponse = await fetch(
-                        `https://maps.googleapis.com/maps/api/timezone/json?location=${latitude},${longitude}&timestamp=${Math.floor(Date.now() / 1000)}&key=AIzaSyDJRa9QY6RF9ooPsZ1OpVNmMO6enp4mnqA`
+                    const timestamp = Math.floor(Date.now() / 1000);
+                    const response = await fetch(
+                        `https://maps.googleapis.com/maps/api/timezone/json?location=${latitude},${longitude}&timestamp=${timestamp}&key=AIzaSyDJRa9QY6RF9ooPsZ1OpVNmMO6enp4mnqA`
                     );
-                    const timezoneData = await timezoneResponse.json();
-
-                    if (timezoneData.status === "OK") {
+                    const data = await response.json();
+                    if (data.status === "OK") {
                         const options = {
-                            timeZone: timezoneData.timeZoneId,
+                            timeZone: data.timeZoneId,
                             weekday: "long",
                             year: "numeric",
                             month: "long",
@@ -131,33 +132,25 @@ function updateDateTime() {
                             hour: "numeric",
                             minute: "numeric",
                         };
-
                         const dateFormatter = new Intl.DateTimeFormat("en-US", options);
-                        const currentTime = dateFormatter.format(new Date());
-
-                        document.getElementById("current-time").innerText = `${currentTime}`;
+                        document.getElementById("current-time").innerText = dateFormatter.format(new Date());
                     } else {
-                        document.getElementById("current-time").innerText =
-                            "Unable to fetch time zone information.";
-                        console.log("Fail Zone: 1 - If statement for Timezone");
+                        document.getElementById("current-time").innerText = "Unable to fetch time zone.";
                     }
                 } catch (error) {
                     console.error("Error fetching time zone information:", error);
-                    document.getElementById("current-time").innerText =
-                        "Unable to fetch time zone information.";
+                    document.getElementById("current-time").innerText = "Unable to fetch time zone.";
                 }
             },
             (error) => {
                 console.error("Error getting location:", error.message);
-                document.getElementById("current-time").innerText =
-                    "Unable to fetch location for time information.";
+                document.getElementById("current-time").innerText = "Location error: can't fetch time.";
             }
         );
     } else {
-        document.getElementById("current-time").innerText =
-            "Geolocation is not supported by your browser.";
+        document.getElementById("current-time").innerText = "Geolocation not supported.";
     }
 }
 
-// Call the function to update date and time on page load
+// Call updateDateTime if you want the time to show on load
 updateDateTime();
