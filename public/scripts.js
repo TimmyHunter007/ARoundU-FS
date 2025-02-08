@@ -45,6 +45,30 @@ function initMap() {
     });
 }
 
+function formatDateTime(dateStr, timeStr) {
+    // Handle missing/invalid data
+    if (!dateStr || dateStr === 'Date not available' ||
+        !timeStr || timeStr === 'Time not available') {
+        return 'Date/Time not available';
+    }
+
+    // Parse combined string "YYYY-MM-DDTHH:mm:ss"
+    const dateObj = new Date(`${dateStr}T${timeStr}`);
+    if (isNaN(dateObj.getTime())) {
+        return 'Date/Time not available';
+    }
+
+    // Convert to local, human-readable format
+    return dateObj.toLocaleString('en-US', {
+        month: 'long',      // e.g. "February"
+        day: 'numeric',     // e.g. "16"
+        year: 'numeric',    // e.g. "2025"
+        hour: 'numeric',    
+        minute: '2-digit',  
+        hour12: true        // 12-hour clock with AM/PM
+    });
+}
+
 /**
  * Fetches events from our server with optional filters, then displays them.
  */
