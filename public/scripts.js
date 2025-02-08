@@ -109,7 +109,6 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
 
 /**
  * Updates the current date and time based on user’s geolocation.
- * (Optional if you still want to show local date/time info)
  */
 function updateDateTime() {
     if (navigator.geolocation) {
