@@ -87,7 +87,7 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
                     //const eventDate = event.date || "Date not available";
                     //const eventTime = event.time || "Time not available";
                     //<h4>${eventDate} ${eventTime}</h4>
-                    const formattedDateTime = formateDateTime(event.date, event.time);
+                    const formattedDateTime = formatDateTime(event.date, event.time);
 
                     eventCard.innerHTML = `
                         <h3>${event.name}</h3>
