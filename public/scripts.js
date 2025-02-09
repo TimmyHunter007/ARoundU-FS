@@ -142,6 +142,7 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
                     <hr>
                     <h4>${formattedDateTime}</h4>
                     <p>${event.description}</p>
+                    <p>${event.postalcode}</p>
                 `;
 
                 eventsContainer.appendChild(eventCard);
