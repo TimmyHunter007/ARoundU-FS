@@ -14,7 +14,7 @@ const getEvents = async (req, res) => {
     const {
         location,
         radius = 10,
-        singleDate,
+        startDateTime,
         eventType,
         timeOfDay
     } = req.query;
@@ -50,9 +50,9 @@ const getEvents = async (req, res) => {
 
         // 1) Convert user date range to ISO8601 if provided
         //    e.g., "2025-05-01" => "2025-05-01T00:00:00Z"
-        if (singleDate) {
-            ticketmasterParams.startDateTime = convertToISO8601(singleDate, '00:00:00');
-            ticketmasterParams.endDateTime = convertToISO8601(singleDate, '23:59:59');
+        if (startDateTime) {
+            ticketmasterParams.startDateTime = convertToISO8601(startDateTime, '00:00:00');
+            ticketmasterParams.endDateTime = convertToISO8601(startDateTime, '23:59:59');
         }
 
         // 2) If eventType is provided, use classificationName
