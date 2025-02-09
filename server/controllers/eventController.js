@@ -27,11 +27,24 @@ const getEvents = async (req, res) => {
         // Separate lat/long
         const [latitude, longitude] = location.split(',');
 
+        // Convert radius to a number, then clamp
+        let parsedRadius = parseFloat(radius);
+        if (isNaN(parsedRadius)) {
+            parsedRadius = 10;
+        }
+        
+        if (parsedRadius > 200) {
+            parsedRadius = 200;
+        }
+        if (parsedRadius < 0) {
+            parsedRadius = 0;
+        }
+
         // Build Ticketmaster query params
         const ticketmasterParams = {
             apikey: process.env.TICKETMASTER_API_KEY,
             latlong: `${latitude},${longitude}`,
-            radius,
+            radius: parsedRadius,
             unit: 'miles',
         };
 
