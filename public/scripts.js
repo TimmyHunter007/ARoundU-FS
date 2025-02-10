@@ -50,6 +50,7 @@ function initMap() {
             // Fetch events with the user's stored coords + filters
             fetchEvents(userLat, userLng, radius, {
                 startDateTime: rawDate,
+                endDateTime,
                 eventType,
                 timeOfDay,
             });
@@ -99,11 +100,13 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
     // Build the query string
     let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
     if (filters.startDateTime) {
-        let combinedDateTime = `${filters.startDateTime}`;
+        let ScombinedDateTime = `${filters.startDateTime}`;
+        let EcombinedDateTime = `${filters.endDateTime}`;
         if (filters.timeOfDay) {
-            combinedDateTime += `${filters.timeOfDay}`;
+            ScombinedDateTime += `${filters.timeOfDay}`;
+            EcombinedDateTime += `${filters.timeOfDay}`;
         }
-        url += `&startDateTime=${combinedDateTime}&endDateTime=${combinedDateTime}`;
+        url += `&startDateTime=${ScombinedDateTime}&endDateTime=${EcombinedDateTime}`;
     }
     if (filters.eventType) url += `&eventType=${filters.eventType}`;
 
