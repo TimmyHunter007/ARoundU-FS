@@ -49,7 +49,7 @@ function initMap() {
 
             // Fetch events with the user's stored coords + filters
             fetchEvents(userLat, userLng, radius, {
-                singleDate: rawDate,
+                startDateTime: rawDate,
                 eventType,
                 timeOfDay,
             });
@@ -98,7 +98,7 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
 
     // Build the query string
     let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
-    if (filters.singleDate) url += `&singleDate=${filters.singleDate}`;
+    if (filters.startDateTime) url += `&startDateTime=${filters.startDateTime}T00:00:00Z$endDateTime=${filters.startDateTime}T23:59:59Z`;
     if (filters.eventType) url += `&eventType=${filters.eventType}`;
     if (filters.timeOfDay) url += `&timeOfDay=${filters.timeOfDay}`;
 
