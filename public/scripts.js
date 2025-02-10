@@ -99,71 +99,62 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
     // Build the query string
     let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
     if (filters.startDateTime) {
-        let combineDateTime = `${filters.startDateTime}`;
+        let combinedDateTime = `${filters.startDateTime}`;
         if (filters.timeOfDay) {
-            combineDateTime += `${filters.timeOfDay}`
+            combinedDateTime += `${filters.timeOfDay}`;
         }
-        url += `&startDateTime=${combineDateTime}&endDateTime=${combineDateTime}`;
-    } 
+        url += `&startDateTime=${combinedDateTime}&endDateTime=${combinedDateTime}`;
+    }
     if (filters.eventType) url += `&eventType=${filters.eventType}`;
 
     fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-        if (data.events && data.events.length > 0) {
-            // We'll use LatLngBounds to auto-fit the map to all markers
-            const bounds = new google.maps.LatLngBounds();
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Fetched events data:", data); // Debug log
+            if (data.events && data.events.length > 0) {
+                const bounds = new google.maps.LatLngBounds();
 
-            data.events.forEach((event) => {
-                // Create a marker for each event
-                const marker = new google.maps.Marker({
-                    position: { lat: event.latitude, lng: event.longitude },
-                    map,
-                    title: event.name,
+                data.events.forEach((event) => {
+                    const marker = new google.maps.Marker({
+                        position: { lat: event.latitude, lng: event.longitude },
+                        map,
+                        title: event.name,
+                    });
+
+                    markers.push(marker);
+                    bounds.extend(marker.getPosition());
+
+                    const infoWindow = new google.maps.InfoWindow({
+                        content: `<h3>${event.name}</h3><p>${event.description}</p>`,
+                    });
+
+                    marker.addListener("click", () => {
+                        infoWindow.open(map, marker);
+                    });
+
+                    const eventCard = document.createElement("div");
+                    eventCard.className = "card";
+                    const formattedDateTime = formatDateTime(event.date, event.time);
+                    eventCard.innerHTML = `
+                        <h3>${event.name}</h3>
+                        <hr>
+                        <h4>${formattedDateTime}</h4>
+                        <p>${event.description}</p>
+                        <p>${event.postalcode}</p>
+                    `;
+                    eventsContainer.appendChild(eventCard);
                 });
 
-                // Add the marker to our global array
-                markers.push(marker);
-
-                // Extend the map bounds to include this marker's position
-                bounds.extend(marker.getPosition());
-
-                // Info Window
-                const infoWindow = new google.maps.InfoWindow({
-                    content: `<h3>${event.name}</h3><p>${event.description}</p>`,
-                });
-
-                marker.addListener("click", () => {
-                    infoWindow.open(map, marker);
-                });
-
-                // Build the event card
-                const eventCard = document.createElement("div");
-                eventCard.className = "card";
-
-                const formattedDateTime = formatDateTime(event.date, event.time);
-                eventCard.innerHTML = `
-                    <h3>${event.name}</h3>
-                    <hr>
-                    <h4>${formattedDateTime}</h4>
-                    <p>${event.description}</p>
-                    <p>${event.postalcode}</p>
-                `;
-
-                eventsContainer.appendChild(eventCard);
-            });
-
-            // (Optional) Fit the map's viewport so all markers are visible
-            map.fitBounds(bounds);
-        } else {
-            alert("No events found!");
-            eventsContainer.innerHTML = "<p>No events found in the selected area.</p>";
-        }
-    })
-    .catch((error) => {
-        console.error("Error fetching events:", error);
-        alert("Unable to fetch events at the moment. Please try again later.");
-    });
+                map.fitBounds(bounds);
+            } else {
+                alert("No events found!");
+                eventsContainer.innerHTML = "<p>No events found in the selected area.</p>";
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching events:", error);
+            alert("Unable to fetch events at the moment. Please try again later.");
+        });
 }
 
 /**
