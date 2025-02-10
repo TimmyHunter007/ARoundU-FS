@@ -15,6 +15,7 @@ const getEvents = async (req, res) => {
         location,
         radius = 10,
         startDateTime,
+        endDateTime,
         eventType,
         timeOfDay
     } = req.query;
@@ -39,6 +40,9 @@ const getEvents = async (req, res) => {
         //    e.g., "2025-05-01" => "2025-05-01T00:00:00Z"
         if (startDateTime) {
             ticketmasterParams.startDateTime = convertToISO8601(startDateTime, '00:00:00');
+            
+        }
+        if (endDateTime) {
             ticketmasterParams.endDateTime = convertToISO8601(endDateTime, '23:59:59');
         }
 
