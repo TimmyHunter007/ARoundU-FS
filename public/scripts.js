@@ -42,6 +42,7 @@ function initMap() {
                     rawDate = "";
                 }
             }
+            let endDateTime = document.getElementById("single-date")?.value.trim() || "";
 
             // Gather filter options
             const eventType = document.getElementById("event-type")?.value || "";
@@ -50,7 +51,7 @@ function initMap() {
             // Fetch events with the user's stored coords + filters
             fetchEvents(userLat, userLng, radius, {
                 startDateTime: rawDate,
-                endDateTime: rawDate,
+                endDateTime,
                 eventType,
                 timeOfDay,
             });
