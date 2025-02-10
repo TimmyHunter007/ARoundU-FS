@@ -103,7 +103,7 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
         if (filters.timeOfDay) {
             combineDateTime += `${filters.timeOfDay}`
         }
-        url += `&startDateTime=${combinedDateTime}&endDateTime=${combinedDateTime}`;
+        url += `&startDateTime=${combineDateTime}&endDateTime=${combineDateTime}`;
     } 
     if (filters.eventType) url += `&eventType=${filters.eventType}`;
 
