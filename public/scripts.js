@@ -101,12 +101,17 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
     let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
     if (filters.startDateTime) {
         let ScombinedDateTime = `${filters.startDateTime}`;
-        let EcombinedDateTime = `${filters.endDateTime}`;
         if (filters.timeOfDay) {
             ScombinedDateTime += `${filters.timeOfDay}`;
+        }
+        url += `&startDateTime=${ScombinedDateTime}`;
+    }
+    if (filters.endDateTime) {
+        let EcombinedDateTime = `${filters.endDateTime}`;
+        if (filters.timeOfDay) {
             EcombinedDateTime += `${filters.timeOfDay}`;
         }
-        url += `&startDateTime=${ScombinedDateTime}&endDateTime=${EcombinedDateTime}`;
+        url += `&endDateTime=${EcombinedDateTime}`;
     }
     if (filters.eventType) url += `&eventType=${filters.eventType}`;
 
