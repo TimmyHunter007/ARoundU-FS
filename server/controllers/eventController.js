@@ -17,7 +17,8 @@ const getEvents = async (req, res) => {
         startDateTime,
         endDateTime,
         eventType,
-        timeOfDay
+        startTime,
+        endTime
     } = req.query;
 
     if (!location) {
@@ -52,6 +53,10 @@ const getEvents = async (req, res) => {
             ticketmasterParams.classificationName = eventType;
         }
 
+        if (endTime) {
+            ticketmasterParams.classificationName = endTime;
+        }
+
         // Fetch events from Ticketmaster
         const response = await axios.get('https://app.ticketmaster.com/discovery/v2/events.json', {
             params: ticketmasterParams,
@@ -71,8 +76,8 @@ const getEvents = async (req, res) => {
         }
 
         // 3) Post-fetch filter by timeOfDay (morning, afternoon, evening, late-night)
-        if (timeOfDay) {
-            events = events.filter((e) => isWithinTimeOfDay(e.time, timeOfDay));
+        if (startTime) {
+            events = events.filter((e) => isWithinTimeOfDay(e.time, startTime));
         }
 
         res.status(200).json({ events });
@@ -97,7 +102,7 @@ function convertToISO8601(dateString, timeString) {
  * Check if an event's localTime is within the chosen timeOfDay category.
  * localTime is usually in "HH:MM:SS" format.
  */
-function isWithinTimeOfDay(localTime, timeOfDay) {
+function isWithinTimeOfDay(localTime, startTime) {
     if (!localTime || localTime === 'Time not available') return true; // can't filter unknown time
 
     const [hourStr] = localTime.split(':');
@@ -105,7 +110,7 @@ function isWithinTimeOfDay(localTime, timeOfDay) {
     if (isNaN(hour)) return true;
 
     // Define time blocks
-    switch (timeOfDay) {
+    switch (startTime) {
         case 'morning':     // 6am - 11:59am
             return hour >= 6 && hour < 12;
         case 'afternoon':   // 12pm - 5:59pm

@@ -46,14 +46,16 @@ function initMap() {
 
             // Gather filter options
             const eventType = document.getElementById("event-type")?.value || "";
-            const timeOfDay = document.getElementById("time-of-day")?.value || "";
+            const startTime = document.getElementById("startTime")?.value || "";
+            const endTime = document.getElementById("endTime")?.value || "";
 
             // Fetch events with the user's stored coords + filters
             fetchEvents(userLat, userLng, radius, {
                 startDateTime: rawDate,
                 endDateTime,
                 eventType,
-                timeOfDay,
+                startTime,
+                endTime,
             });
         });
     });
@@ -102,15 +104,15 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
     let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
     if (filters.startDateTime) {
         let ScombinedDateTime = `${filters.startDateTime}`;
-        if (filters.timeOfDay) {
-            ScombinedDateTime += `${filters.timeOfDay}`;
+        if (filters.startTime) {
+            ScombinedDateTime += `${filters.startTime}`;
         }
         url += `&startDateTime=${ScombinedDateTime}`;
     }
     if (filters.endDateTime) {
         let EcombinedDateTime = `${filters.endDateTime}`;
-        if (filters.timeOfDay) {
-            EcombinedDateTime += `${filters.timeOfDay}`;
+        if (filters.endTime) {
+            EcombinedDateTime += `${filters.endTime}`;
         }
         url += `&endDateTime=${EcombinedDateTime}`;
     }
