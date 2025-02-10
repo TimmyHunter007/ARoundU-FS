@@ -98,9 +98,14 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
 
     // Build the query string
     let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
-    if (filters.startDateTime) url += `&startDateTime=${filters.startDateTime}T00:00:00Z$endDateTime=${filters.startDateTime}T23:59:59Z`;
+    if (filters.startDateTime) {
+        let combineDateTime = `${filters.startDateTime}`;
+        if (filters.timeOfDay) {
+            combineDateTime += `${filters.timeOfDay}`
+        }
+        url += `&startDateTime=${combinedDateTime}&endDateTime=${combinedDateTime}`;
+    } 
     if (filters.eventType) url += `&eventType=${filters.eventType}`;
-    if (filters.timeOfDay) url += `&timeOfDay=${filters.timeOfDay}`;
 
     fetch(url)
     .then((response) => response.json())
