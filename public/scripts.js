@@ -230,3 +230,26 @@ function updateDateTime() {
 
 // Call updateDateTime if you want the time to show on load
 updateDateTime();
+
+function openModal(event) {
+    const modal = document.getElementById("event-modal");
+    const modalDetails = document.getElementById("modal-details");
+    modalDetails.innerHTML = `
+        <h2>${event.name}</h2>
+        <p>${formatDateTime(event.date, event.time)}</p>
+        <p>${event.description}</p>
+        <p>Postal Code: ${event.postalcode}</p>
+    `;
+    modal.style.display = "block";
+
+    const closeModalBtn = document.querySelector(".close-btn");
+    closeModalBtn.onclick = function() {
+        modal.style.display = "none";
+    };
+
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    };
+}
