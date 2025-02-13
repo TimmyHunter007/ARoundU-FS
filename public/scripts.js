@@ -126,35 +126,28 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
                 const bounds = new google.maps.LatLngBounds();
 
                 data.events.forEach((event) => {
-                    const marker = new google.maps.Marker({
-                        position: { lat: event.latitude, lng: event.longitude },
-                        map,
-                        title: event.name,
-                    });
-
-                    markers.push(marker);
-                    bounds.extend(marker.getPosition());
-
-                    const infoWindow = new google.maps.InfoWindow({
-                        content: `<h3>${event.name}</h3><p>${event.description}</p>`,
-                    });
-
-                    marker.addListener("click", () => {
-                        infoWindow.open(map, marker);
-                    });
-
                     const eventCard = document.createElement("div");
                     eventCard.className = "card";
-                    const formattedDateTime = formatDateTime(event.date, event.time);
-                    eventCard.innerHTML = `
+                
+                    const cardContent = document.createElement("div");
+                    cardContent.className = "card-content";
+                    cardContent.innerHTML = `
                         <h3>${event.name}</h3>
                         <hr>
-                        <h4>${formattedDateTime}</h4>
+                        <h4>${formatDateTime(event.date, event.time)}</h4>
                         <p>${event.description}</p>
                         <p>${event.postalcode}</p>
                     `;
+                
+                    const readMoreButton = document.createElement("button");
+                    readMoreButton.className = "read-more-btn";
+                    readMoreButton.innerText = "Read More";
+                    readMoreButton.addEventListener("click", () => openModal(event));
+                
+                    eventCard.appendChild(cardContent);
+                    eventCard.appendChild(readMoreButton);
                     eventsContainer.appendChild(eventCard);
-                });
+                });                
 
                 map.fitBounds(bounds);
             } else {
@@ -220,3 +213,26 @@ function updateDateTime() {
 
 // Call updateDateTime if you want the time to show on load
 updateDateTime();
+
+function openModal(event) {
+    const modal = document.getElementById("event-modal");
+    const modalDetails = document.getElementById("modal-details");
+    modalDetails.innerHTML = `
+        <h2>${event.name}</h2>
+        <p>${formatDateTime(event.date, event.time)}</p>
+        <p>${event.description}</p>
+        <p>Postal Code: ${event.postalcode}</p>
+    `;
+    modal.style.display = "block";
+
+    const closeModalBtn = document.querySelector(".close-btn");
+    closeModalBtn.onclick = function() {
+        modal.style.display = "none";
+    };
+
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    };
+}
