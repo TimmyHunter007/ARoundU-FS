@@ -194,16 +194,15 @@ body {
     border-radius: 8px;
     padding: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-    max-height: 300px; 
+    max-height: none; /* Allow height to expand naturally */
     overflow: hidden;
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
   }
   
   .card-content {
-    max-height: 250px;
+    max-height: 250px; /* Limit content height */
     overflow: hidden;
     position: relative;
   }
@@ -214,9 +213,15 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 50px;
+    height: 50px; /* Gradient height */
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0), white);
-    pointer-events: none; /* Important so it doesn't block the button */
+    pointer-events: none;
+  }
+  
+  .card-actions {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
   }
   
   .card .read-more-btn {
@@ -226,11 +231,8 @@ body {
     padding: 8px 16px;
     cursor: pointer;
     border-radius: 5px;
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1; /* Above gradient */
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
   }
   
   .card .read-more-btn:hover {
