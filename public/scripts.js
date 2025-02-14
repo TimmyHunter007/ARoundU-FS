@@ -34,7 +34,7 @@ function initMap() {
 
             fetchEvents(userLat, userLng, radius, {
                 startDateTime: rawDate,
-                endDateTime,
+                endDateTime: rawDate,
                 startTime,
                 endTime,
                 eventType,
@@ -79,6 +79,7 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
         }
         url += `&startDateTime=${ScombinedDateTime}`;
     }
+    /*
     if (filters.endDateTime) {
         let EcombinedDateTime = `${filters.endDateTime}`;
         if (filters.startTime) {
@@ -86,6 +87,8 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
         }
         url += `&endDateTime=${ScombinedDateTime}T23:59:59Z`;
     }
+    */
+    url += `&endDateTime=${endDateTime}T23:59:59Z`;
     if (filters.eventType) {
         url += `&eventType=${filters.eventType}`;
     }
