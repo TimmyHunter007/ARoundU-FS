@@ -1,5 +1,3 @@
-/* eventController.js */
-
 const axios = require('axios');
 require('dotenv').config();
 
@@ -15,8 +13,6 @@ const getEvents = async (req, res) => {
         location,
         radius = 10,
         startDateTime,
-        endDateTime,
-        eventType,
         startTime,
         endTime
     } = req.query;
@@ -37,24 +33,12 @@ const getEvents = async (req, res) => {
             unit: 'miles',
         };
 
-        // 1) Convert user date range to ISO8601 if provided
-        //    e.g., "2025-05-01" => "2025-05-01T00:00:00Z"
         if (startDateTime) {
             ticketmasterParams.startDateTime = convertToISO8601(startDateTime, '00:00:00');
-            
-        }
-        if (endDateTime) {
-            ticketmasterParams.endDateTime = convertToISO8601(endDateTime, '23:59:59');
         }
 
-        // 2) If eventType is provided, use classificationName
-        //    Make sure it matches Ticketmaster's known classifications, e.g. "Music", "Sports"
         if (eventType) {
             ticketmasterParams.classificationName = eventType;
-        }
-
-        if (endTime) {
-            ticketmasterParams.classificationName = endTime;
         }
 
         // Fetch events from Ticketmaster
@@ -75,9 +59,14 @@ const getEvents = async (req, res) => {
             }));
         }
 
-        // 3) Post-fetch filter by timeOfDay (morning, afternoon, evening, late-night)
+        // Optional filter by startTime after fetching
         if (startTime) {
-            events = events.filter((e) => isWithinTimeOfDay(e.time, startTime));
+            const selectedHour = parseInt(startTime.split('T')[1].split(':')[0], 10);
+            events = events.filter((e) => {
+                if (!e.time || e.time === 'Time not available') return true;
+                const eventHour = parseInt(e.time.split(':')[0], 10);
+                return eventHour === selectedHour;
+            });
         }
 
         res.status(200).json({ events });
@@ -92,36 +81,7 @@ const getEvents = async (req, res) => {
  */
 function convertToISO8601(dateString, timeString) {
     const dateObj = new Date(`${dateString}T${timeString}`);
-    if (isNaN(dateObj.getTime())) {
-        return undefined;
-    }
-    return dateObj.toISOString(); // e.g., "2025-05-01T00:00:00.000Z"
-}
-
-/**
- * Check if an event's localTime is within the chosen timeOfDay category.
- * localTime is usually in "HH:MM:SS" format.
- */
-function isWithinTimeOfDay(localTime, startTime) {
-    if (!localTime || localTime === 'Time not available') return true; // can't filter unknown time
-
-    const [hourStr] = localTime.split(':');
-    const hour = parseInt(hourStr, 10);
-    if (isNaN(hour)) return true;
-
-    // Define time blocks
-    switch (startTime) {
-        case 'morning':     // 6am - 11:59am
-            return hour >= 6 && hour < 12;
-        case 'afternoon':   // 12pm - 5:59pm
-            return hour >= 12 && hour < 18;
-        case 'evening':     // 6pm - 9:59pm
-            return hour >= 18 && hour < 22;
-        case 'late-night':  // 10pm - 5:59am
-            return (hour >= 22 && hour <= 23) || (hour >= 0 && hour < 6);
-        default:
-            return true;
-    }
+    return isNaN(dateObj.getTime()) ? undefined : dateObj.toISOString();
 }
 
 module.exports = { getEvents };

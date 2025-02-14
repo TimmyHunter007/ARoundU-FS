@@ -28,24 +28,13 @@ function initMap() {
             radius = Math.max(0, Math.min(radius, 300));
 
             let rawDate = document.getElementById("single-date")?.value.trim() || "";
-            if (rawDate) {
-                const parsed = new Date(rawDate);
-                if (isNaN(parsed.getTime())) {
-                    rawDate = "";
-                }
-            }
-            const endDateTime = document.getElementById("single-date")?.value.trim() || "";
-
-            const eventType = document.getElementById("event-type")?.value || "";
             const startTime = document.getElementById("startTime")?.value || "";
-            const endTime = document.getElementById("endTime")?.value || "";
+            const eventType = document.getElementById("event-type")?.value || "";
 
             fetchEvents(userLat, userLng, radius, {
                 startDateTime: rawDate,
-                endDateTime,
-                eventType,
                 startTime,
-                endTime,
+                eventType,
             });
         });
     });
@@ -81,20 +70,14 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
     // Build the query string
     let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
     if (filters.startDateTime) {
-        let ScombinedDateTime = `${filters.startDateTime}`;
-        if (filters.startTime) {
-            ScombinedDateTime += `${filters.startTime}`;
-        }
-        url += `&startDateTime=${ScombinedDateTime}`;
+        url += `&startDateTime=${filters.startDateTime}`;
     }
-    if (filters.endDateTime) {
-        let EcombinedDateTime = `${filters.endDateTime}`;
-        if (filters.endTime) {
-            EcombinedDateTime += `${filters.endTime}`;
-        }
-        url += `&endDateTime=${EcombinedDateTime}`;
+    if (filters.startTime) {
+        url += `&startTime=${filters.startTime}`;
     }
-    if (filters.eventType) url += `&eventType=${filters.eventType}`;
+    if (filters.eventType) {
+        url += `&eventType=${filters.eventType}`;
+    }
 
     fetch(url)
         .then((response) => response.json())
