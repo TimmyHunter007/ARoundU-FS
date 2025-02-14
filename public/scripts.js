@@ -121,11 +121,16 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
     fetch(url)
         .then((response) => response.json())
         .then((data) => {
-            console.log("Fetched events data:", data); // Debug log
-            if (data.events && data.events.length > 0) {
+            console.log("Fetched events data:", data);
+            if (data.events && Array.isArray(data.events) && data.events.length > 0) {
+                eventsContainer.innerHTML = ""; // Clear existing events
+                markers.forEach((m) => m.setMap(null));
+                markers = [];
+
                 const bounds = new google.maps.LatLngBounds();
 
                 data.events.forEach((event) => {
+                    console.log("Event Object:", event);
                     const marker = new google.maps.Marker({
                         position: { lat: event.latitude, lng: event.longitude },
                         map,
@@ -145,7 +150,7 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
 
                     const eventCard = document.createElement("div");
                     eventCard.className = "card";
-                
+
                     const cardContent = document.createElement("div");
                     cardContent.className = "card-content";
                     cardContent.innerHTML = `
@@ -153,27 +158,28 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
                         <hr>
                         <h4>${formatDateTime(event.date, event.time)}</h4>
                         <p>${event.description}</p>
+                        <p>${event.postalcode}</p>
                     `;
-                
+
                     const readMoreButton = document.createElement("button");
                     readMoreButton.className = "read-more-btn";
                     readMoreButton.innerText = "Read More";
                     readMoreButton.addEventListener("click", () => openModal(event));
-                
+
                     eventCard.appendChild(cardContent);
                     eventCard.appendChild(readMoreButton);
                     eventsContainer.appendChild(eventCard);
-                });   
+                });
 
                 map.fitBounds(bounds);
             } else {
-                alert("No events found!");
+                console.warn("No events found");
                 eventsContainer.innerHTML = "<p>No events found in the selected area.</p>";
             }
         })
         .catch((error) => {
             console.error("Error fetching events:", error);
-            alert("Unable to fetch events at the moment. Please try again later.");
+            alert("Unable to fetch events. Please try again.");
         });
 }
 
@@ -237,6 +243,7 @@ function openModal(event) {
         <h2>${event.name}</h2>
         <p>${formatDateTime(event.date, event.time)}</p>
         <p>${event.description}</p>
+        <p>${event.postalcode}</p>
     `;
     modal.style.display = "block";
 

@@ -71,6 +71,7 @@ const getEvents = async (req, res) => {
                 latitude: parseFloat(event._embedded.venues[0].location.latitude),
                 longitude: parseFloat(event._embedded.venues[0].location.longitude),
                 description: event.info || 'No description available',
+                postalcode: event._embedded.venues[0].postalCode || 'N/A',
             }));
         }
 
