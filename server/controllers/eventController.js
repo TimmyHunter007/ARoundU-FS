@@ -14,7 +14,7 @@ const getEvents = async (req, res) => {
         radius = 10,
         startDateTime,
         startTime,
-        endTime
+        eventType
     } = req.query;
 
     if (!location) {
