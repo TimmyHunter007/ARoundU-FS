@@ -107,7 +107,7 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
         if (filters.startTime) {
             ScombinedDateTime += `${filters.startTime}`;
         }
-        url += `&startDateTime=${startDateTime}`;
+        url += `&startDateTime=${startTime}`;
     }
     /*
     if (filters.endDateTime) {
