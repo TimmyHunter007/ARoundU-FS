@@ -107,8 +107,9 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
         if (filters.startTime) {
             ScombinedDateTime += `${filters.startTime}`;
         }
-        url += `&startDateTime=${ScombinedDateTime}`;
+        url += `&startDateTime=${startDateTime}`;
     }
+    /*
     if (filters.endDateTime) {
         let EcombinedDateTime = `${filters.endDateTime}`;
         if (filters.endTime) {
@@ -117,6 +118,7 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
         url += `&endDateTime=${EcombinedDateTime}`;
     }
     if (filters.eventType) url += `&eventType=${filters.eventType}`;
+    */
 
     fetch(url)
         .then((response) => response.json())
