@@ -153,7 +153,6 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
                         <hr>
                         <h4>${formatDateTime(event.date, event.time)}</h4>
                         <p>${event.description}</p>
-                        <p>${event.postalcode}</p>
                     `;
                 
                     const readMoreButton = document.createElement("button");
@@ -238,7 +237,6 @@ function openModal(event) {
         <h2>${event.name}</h2>
         <p>${formatDateTime(event.date, event.time)}</p>
         <p>${event.description}</p>
-        <p>Postal Code: ${event.postalcode}</p>
     `;
     modal.style.display = "block";
 
