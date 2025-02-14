@@ -105,9 +105,9 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
                     cardContent.innerHTML = `
                         <h3>${event.name}</h3>
                         <hr>
-                        <h4>${formatDateTime(event.date, event.time)}</h4>
+                        <h4>Time of Event: ${formatDateTime(event.date, event.time)}</h4>
                         <p>${event.description}</p>
-                        <p>${event.postalcode}</p>
+                        <p>Postal Code of Event: ${event.postalcode}</p>
                     `;
 
                     const readMoreButton = document.createElement("button");
