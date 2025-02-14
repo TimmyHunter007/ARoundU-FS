@@ -18,6 +18,7 @@ function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
             center: defaultCenter,
             zoom: 10,
+            mapId: "5c290e9e653ba24a",
         });
 
         fetchEvents(userLat, userLng, 10, {});
