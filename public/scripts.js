@@ -88,7 +88,7 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
         url += `&endDateTime=${ScombinedDateTime}T23:59:59Z`;
     }
     */
-    url += `&endDateTime=${endDateTime}T23:59:59Z`;
+    url += `&endDateTime=${filters.endDateTime}T23:59:59Z`;
     if (filters.eventType) {
         url += `&eventType=${filters.eventType}`;
     }
