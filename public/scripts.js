@@ -70,9 +70,11 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
     // Build the query string
     let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
     if (filters.startDateTime) {
-        // Combine startDateTime and startTime into ISO8601 format
-        const combinedDateTime = `${filters.startDateTime}${filters.startTime || 'T00:00:00Z'}`;
-        url += `&startDateTime=${combinedDateTime}`;
+        let ScombinedDateTime = `${filters.startDateTime}`;
+        if (filters.startTime) {
+            ScombinedDateTime += `${filters.startTime}`;
+        }
+        url += `&startDateTime=${ScombinedDateTime}`;
     }
     if (filters.eventType) {
         url += `&eventType=${filters.eventType}`;
