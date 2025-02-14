@@ -29,11 +29,14 @@ function initMap() {
 
             let rawDate = document.getElementById("single-date")?.value.trim() || "";
             const startTime = document.getElementById("startTime")?.value || "";
+            const endTime = document.getElementById("startTime")?.value || "";
             const eventType = document.getElementById("event-type")?.value || "";
 
             fetchEvents(userLat, userLng, radius, {
                 startDateTime: rawDate,
+                endDateTime,
                 startTime,
+                endTime,
                 eventType,
             });
         });
@@ -75,6 +78,13 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
             ScombinedDateTime += `${filters.startTime}`;
         }
         url += `&startDateTime=${ScombinedDateTime}`;
+    }
+    if (filters.endDateTime) {
+        let EcombinedDateTime = `${filters.endDateTime}`;
+        if (filters.startTime) {
+            EcombinedDateTime += `${filters.startTime}`;
+        }
+        url += `&endDateTime=${ScombinedDateTime}T23:59:59Z`;
     }
     if (filters.eventType) {
         url += `&eventType=${filters.eventType}`;
