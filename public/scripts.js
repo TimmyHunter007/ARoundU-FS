@@ -70,21 +70,14 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
     markers.forEach((m) => m.map = null);
     markers = [];
 
-    // Build the query string
     let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
     if (filters.startDateTime) {
         if (filters.startTime) {
-            if (filters.startDateTime) {
-                let ScombinedDateTime = `${filters.startDateTime}`;
-                if (filters.startTime) {
-                    ScombinedDateTime += `${filters.startTime}`;
-                }
-                url += `&startDateTime=${ScombinedDateTime}`;
-            }
+            let combinedDateTime = `${filters.startDateTime}${filters.startTime}`;
+            url += `&startDateTime=${combinedDateTime}`;
         } else {
             url += `&startDateTime=${filters.startDateTime}T00:00:00Z`;
         }
-
         url += `&endDateTime=${filters.endDateTime}T23:59:59Z`;
     }
     if (filters.eventType) {
@@ -125,7 +118,15 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
                     const readMoreButton = document.createElement("button");
                     readMoreButton.className = "read-more-btn";
                     readMoreButton.innerText = "Read More";
-                    readMoreButton.addEventListener("click", () => openModal(event));
+                    readMoreButton.addEventListener("click", () => {
+                        if (eventCard.classList.contains("expanded")) {
+                            eventCard.classList.remove("expanded");
+                            readMoreButton.innerText = "Read More";
+                        } else {
+                            eventCard.classList.add("expanded");
+                            readMoreButton.innerText = "Show Less";
+                        }
+                    });
 
                     eventCard.appendChild(cardContent);
                     eventCard.appendChild(readMoreButton);
