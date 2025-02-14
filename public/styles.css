@@ -148,7 +148,7 @@ body {
 }
 
 .card-content {
-  max-height: 150px; /* Restrict visible content */
+  max-height: 300px; /* Restrict visible content */
   overflow: hidden;
   position: relative;
 }
