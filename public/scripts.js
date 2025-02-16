@@ -71,6 +71,15 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
     markers = [];
 
     let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
+
+    if (filters.startDateTime && filters.startTime) {
+        url += `&sort=date,asc`;
+    } else {
+        // Otherwise, you might default to descending
+        url += `&sort=date,desc`;
+    }
+
+    /*
     if (filters.startDateTime) {
         if (filters.startTime) {
             let combinedDateTime = `${filters.startDateTime}${filters.startTime}`;
@@ -80,6 +89,7 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
         }
         url += `&endDateTime=${filters.endDateTime}T23:59:59Z`;
     }
+        */
     if (filters.eventType) {
         url += `&eventType=${filters.eventType}`;
     }
