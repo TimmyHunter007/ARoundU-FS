@@ -29,14 +29,14 @@ function initMap() {
 
             let rawDate = document.getElementById("single-date")?.value.trim() || "";
             const startTime = document.getElementById("startTime")?.value || "";
-            const endTime = document.getElementById("startTime")?.value || "";
+            /*const endTime = document.getElementById("startTime")?.value || "";*/
             const eventType = document.getElementById("event-type")?.value || "";
 
             fetchEvents(userLat, userLng, radius, {
                 startDateTime: rawDate,
-                endDateTime: rawDate,
+                /*endDateTime: rawDate,*/
                 startTime,
-                endTime,
+                /*endTime,*/
                 eventType,
             });
         });
