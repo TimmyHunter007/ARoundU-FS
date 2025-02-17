@@ -41,6 +41,7 @@ body {
     "events events events";
   gap: 24px;
   padding: 24px;
+  max-width: 1500px;
 }
 
 /* Panels */
