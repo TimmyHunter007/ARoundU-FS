@@ -34,12 +34,11 @@ const getEvents = async (req, res) => {
             unit: 'miles',
         };
 
-        if (startDateTime) {
-            ticketmasterParams.startDateTime = convertToISO8601(startDateTime, '00:00:00');
-        }
+        if (startDateTime || endDateTime) {
+            const startISO = startDateTime ? convertToISO8601(startDateTime, startTime || '00:00:00') : '*';
+            const endISO = endDateTime ? convertToISO8601(endDateTime, '23:59"59') : '*';
 
-        if (endDateTime) {
-            ticketmasterParams.endDateTime = convertToISO8601(endDateTime, '23:59:59');
+            ticketmasterParams.localStartDateTime = `${startISO},${endISO}`;
         }
 
         if (eventType) {
@@ -66,7 +65,7 @@ const getEvents = async (req, res) => {
 
         // Optional filter by startTime after fetching
         if (startTime) {
-            const selectedHour = parseInt(startTime.split('T')[1].split(':')[0], 10);
+            const selectedHour = parseInt(startTime.split(':')[0], 10);
             events = events.filter((e) => {
                 if (!e.time || e.time === 'Time not available') return true;
                 const eventHour = parseInt(e.time.split(':')[0], 10);

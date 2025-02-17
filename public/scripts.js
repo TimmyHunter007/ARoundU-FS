@@ -29,7 +29,6 @@ function initMap() {
 
             const rawStartDate = document.getElementById("single-date")?.value.trim() || "";
             const startTime = document.getElementById("startTime")?.value || "";
-            // If you want a separate end date/time, capture them here:
             const rawEndDate = document.getElementById("end-date")?.value.trim() || rawStartDate;
             const endTime = document.getElementById("endTime")?.value || "23:59:59";
 
