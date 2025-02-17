@@ -106,7 +106,7 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
     markers = [];
 
     // Build the base URL for fetching events from the API.
-    let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
+    let url = `/api/events?location=${latitude},${longitude}&radius=${radius}&sort=date,asc`;
 
     // If date filters are provided, convert them to ISO strings and append to the URL.
     if (filters.startDate && filters.endDate) {
