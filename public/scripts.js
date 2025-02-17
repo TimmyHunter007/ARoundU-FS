@@ -27,17 +27,20 @@ function initMap() {
             let radius = parseFloat(document.getElementById("radius").value) || 10;
             radius = Math.max(0, Math.min(radius, 300));
 
-            let rawDate = document.getElementById("single-date")?.value.trim() || "";
+            const rawStartDate = document.getElementById("single-date")?.value.trim() || "";
             const startTime = document.getElementById("startTime")?.value || "";
-            /*const endTime = document.getElementById("startTime")?.value || "";*/
+            // If you want a separate end date/time, capture them here:
+            const rawEndDate = document.getElementById("end-date")?.value.trim() || rawStartDate;
+            const endTime = document.getElementById("endTime")?.value || "23:59:59";
+
             const eventType = document.getElementById("event-type")?.value || "";
 
             fetchEvents(userLat, userLng, radius, {
-                startDateTime: rawDate,
-                /*endDateTime: rawDate,*/
+                startDate: rawStartDate,
                 startTime,
-                /*endTime,*/
-                eventType,
+                endDate: rawEndDate,
+                endTime,
+                eventType
             });
         });
     });
@@ -72,24 +75,13 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
 
     let url = `/api/events?location=${latitude},${longitude}&radius=${radius}`;
 
-    if (filters.startDateTime && filters.startTime) {
-        url += `&sort=date,asc`;
-    } else {
-        // Otherwise, you might default to descending
-        url += `&sort=date,desc`;
+    if (filters.startDate && filters.endDate) {
+        const startISO = buildIsoDateTime(filters.startDate, filters.startTime || "00:00:00");
+        const endISO = buildIsoDateTime(filters.endDate, filters.endTime || "23:59:59");
+
+        url += `&localStartDateTime=${startISO},${endISO}`;
     }
 
-    /*
-    if (filters.startDateTime) {
-        if (filters.startTime) {
-            let combinedDateTime = `${filters.startDateTime}${filters.startTime}`;
-            url += `&startDateTime=${combinedDateTime}`;
-        } else {
-            url += `&startDateTime=${filters.startDateTime}T00:00:00Z`;
-        }
-        url += `&endDateTime=${filters.endDateTime}T23:59:59Z`;
-    }
-        */
     if (filters.eventType) {
         url += `&eventType=${filters.eventType}`;
     }
@@ -152,6 +144,15 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
             console.error("Error fetching events:", error);
             alert("Unable to fetch events. Please try again.");
         });
+}
+
+function buildIsoDateTime(dateStr, timeStr) {
+    let safeTime = timeStr;
+    if (timeStr && timeStr.match(/^\d{2}:\d{2}$/)) {
+        safeTime += ":00";
+    }
+
+    return `${dateStr}T${safeTime}Z`;
 }
 
 function updateDateTime() {
