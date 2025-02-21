@@ -200,26 +200,37 @@ body {
 .modal {
   display: none; /* Hidden by default */
   position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+
+  /* Dim the background with a semi-transparent black overlay */
+  background-color: rgba(0, 0, 0, 0.5); 
+}
+
+/* Centered Modal Box */
+.modal-content {
+  /* Center it with absolute + transform */
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
-  background: transparent; /* Remove the overlay background */
-  /* Remove full-screen dimensions */
-}
 
-.modal-content {
+  /* Set width to ~75% */
+  width: 75%;
+  max-height: 80vh; /* let it scroll if content is too tall */
+  overflow-y: auto;
+
+  /* Style it */
   background-color: var(--background-light);
   padding: 20px;
   border-radius: 12px;
-  width: 400px; /* Adjust width as desired */
-  max-height: 80vh;
-  overflow-y: auto; /* Scroll if content overflows */
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  margin: 0; /* Margin no longer needed since we're centering with transform */
 }
 
-
+/* Close Button */
 .close-btn {
   float: right;
   font-size: 24px;
