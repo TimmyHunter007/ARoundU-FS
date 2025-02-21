@@ -22,6 +22,7 @@ const apiLimiter = rateLimit({
 
 // Routes
 app.use('/api/events', require('./routes/eventRoutes'));
+app.use('/api/auth', require('./routes/authRoutes'));
 
 // Serve index.html for the root route
 app.get('/', (req, res) => {

@@ -129,6 +129,65 @@
                 <!-- Populated dynamically via JS -->
             </div>
 
+            <h1>Sign Up</h1>
+  <form id="signupForm">
+    <label>First Name</label>
+    <input type="text" name="firstName" required /><br><br>
+
+    <label>Last Name</label>
+    <input type="text" name="lastName" required /><br><br>
+
+    <label>Email</label>
+    <input type="email" name="email" required /><br><br>
+
+    <label>Password</label>
+    <input type="password" name="password" required /><br><br>
+
+    <label>Confirm Password</label>
+    <input type="password" name="confirmPassword" required /><br><br>
+
+    <label>Date of Birth</label>
+    <input type="date" name="dateOfBirth" required /><br><br>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      const data = {
+        firstName: formData.get('firstName'),
+        lastName: formData.get('lastName'),
+        email: formData.get('email'),
+        password: formData.get('password'),
+        confirmPassword: formData.get('confirmPassword'),
+        dateOfBirth: formData.get('dateOfBirth'),
+      };
+
+      try {
+        const response = await fetch('/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          alert(result.error || 'Error registering');
+        } else {
+          alert('User registered successfully!');
+          // Possibly redirect to login page
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Server error');
+      }
+    });
+  </script>
+
             <div id="event-modal" class="modal">
                 <div class="modal-content">
                     <span class="close-btn">&times;</span>
