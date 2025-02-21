@@ -166,14 +166,9 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
                     const readMoreButton = document.createElement("button");
                     readMoreButton.className = "read-more-btn";
                     readMoreButton.innerText = "Read More";
+                    
                     readMoreButton.addEventListener("click", () => {
-                        if (eventCard.classList.contains("expanded")) {
-                            eventCard.classList.remove("expanded");
-                            readMoreButton.innerText = "Read More";
-                        } else {
-                            eventCard.classList.add("expanded");
-                            readMoreButton.innerText = "Show Less";
-                        }
+                        openModal(event);
                     });
 
                     // Append the content and button to the event card.
