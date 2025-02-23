@@ -33,6 +33,10 @@ body {
   font-size: 2.5rem;
 }
 
+.sub-h1 {
+  font-size: 20px;
+}
+
 /* Layout */
 .layout-container {
   display: grid;
@@ -267,7 +271,7 @@ body {
 
 .signup-button {
   position: absolute;
-  right: 20px;
+  right: 0px;
   top: 50%;
   transform: translate(-50%);
   background-color: var(--primary-color);
