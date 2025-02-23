@@ -80,7 +80,7 @@ const getEvents = async (req, res) => {
                 // Use the event info or a fallback if not available.
                 description: event.info || 'No description available',
                 // Use the please note info or a fallback if not available.
-                description: event.pleaseNote || 'No description available',
+                pleaseNote: event.pleaseNote || 'No description available',
                 // Use provided address or a fallback message if not available.
                 address: event._embedded.venues[0].address.line1 || 'State not available',
                 // Use the postal code or 'N/A' if not provided.
