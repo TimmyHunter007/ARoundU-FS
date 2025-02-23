@@ -289,7 +289,7 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
                         <hr>
                         <h4>Time of Event: ${formatDateTime(event.date, event.time)}</h4>
                         <p>${event.description}</p>
-                        <p>Address: ${event.address} ${event.city}, ${event.stateCode} - ${event.postalcode}</p>
+                        <p>Location: ${event.address} ${event.city}, ${event.stateCode} - ${event.postalcode}</p>
                     `;
 
                     // Create a "Read More" button to toggle expanded details.
@@ -406,9 +406,14 @@ function openModal(event) {
     // Populate the modal with event details.
     modalDetails.innerHTML = `
         <h2>${event.name}</h2>
-        <p>${formatDateTime(event.date, event.time)}</p>
+        <h3>${formatDateTime(event.date, event.time)}</h3>
+        <hr>
+        <h3>Event Details</h3>
         <p>${event.description}</p>
-        <p>Address: ${event.address} ${event.city}, ${event.stateCode} - ${event.postalcode}</p>
+        <h3></h3>
+        <p>${event.pleaseNote}</p>
+        <h3>Location</h3>
+        <p>${event.address} ${event.city}, ${event.stateCode} ${event.postalcode}</p>
     `;
     
     // Display the modal.
