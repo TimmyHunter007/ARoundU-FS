@@ -231,15 +231,21 @@ body {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
+.modal-content h2 {
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
 /* Close Button */
-.close-btn {
+.close-btn, .close-signup-btn {
   float: right;
   font-size: 24px;
   color: #666;
   cursor: pointer;
 }
 
-.close-btn:hover {
+.close-btn:hover, .close-signup-btn:hover {
   color: var(--primary-color);
 }
 
@@ -275,5 +281,62 @@ body {
 }
 
 .signup-button:hover {
+  background-color: var(--hover-color);
+}
+
+/* The sign-up form */
+.signup-form {
+  /* Center the form column inside the modal */
+  margin: 0 auto;
+  max-width: 500px; /* Limits how wide the form rows can get */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Space between rows */
+}
+
+/* Each row: label on the left, input on the right */
+.form-row {
+  display: flex;
+  align-items: center;
+}
+
+/* Make label a bit narrower, and the input expand */
+.form-row label {
+  width: 35%;
+  min-width: 120px; /* to keep it from getting too small */
+  margin-right: 8px;
+  text-align: right;
+  font-weight: 600;
+}
+
+.form-row input {
+  flex: 1; /* let the input expand to fill the remaining space */
+  padding: 8px;
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+  background-color: #fafafa;
+  transition: all 0.3s ease;
+}
+
+.form-row input:focus {
+  border-color: var(--primary-color);
+  background-color: #fff;
+  outline: none;
+  box-shadow: 0 0 8px rgba(184, 92, 48, 0.3);
+}
+
+/* Submit button */
+.signup-form button[type="submit"] {
+  align-self: center; /* center the button horizontally */
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.signup-form button[type="submit"]:hover {
   background-color: var(--hover-color);
 }

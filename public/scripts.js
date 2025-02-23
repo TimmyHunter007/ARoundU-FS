@@ -328,9 +328,6 @@ function updateDateTime() {
     }
 }
 
-// Update the displayed date and time immediately on load.
-updateDateTime();
-
 /**
  * Opens a modal window displaying detailed information about a specific event.
  *
