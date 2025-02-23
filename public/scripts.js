@@ -406,7 +406,7 @@ function openModal(event) {
     // Populate the modal with event details.
     modalDetails.innerHTML = `
         <h2>${event.name}</h2>
-        <h3>${formatDateTime(event.date, event.time)}</h3>
+        <h3 style="text-align: center;">${formatDateTime(event.date, event.time)}</h3>
         <hr>
         <h3>Event Details</h3>
         <p>${event.description}</p>
