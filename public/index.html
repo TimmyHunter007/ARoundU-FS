@@ -157,42 +157,6 @@
                     </form>
                 </div>
             </div>
-  <script>
-    const form = document.getElementById('signupForm');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-
-      const data = {
-        firstName: formData.get('firstName'),
-        lastName: formData.get('lastName'),
-        email: formData.get('email'),
-        password: formData.get('password'),
-        confirmPassword: formData.get('confirmPassword'),
-        dateOfBirth: formData.get('dateOfBirth'),
-      };
-
-      try {
-        const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-        });
-
-
-        const result = await response.json();
-        if (!response.ok) {
-          alert(result.error || 'Error registering');
-        } else {
-          alert('User registered successfully!');
-          // Possibly redirect to login page
-        }
-      } catch (err) {
-        console.error(err);
-        alert('Server error');
-      }
-    });
-  </script>
 
             <div id="event-modal" class="modal">
                 <div class="modal-content">
