@@ -81,6 +81,10 @@ const getEvents = async (req, res) => {
                 description: event.info || 'No description available',
                 // Use the postal code or 'N/A' if not provided.
                 postalcode: event._embedded.venues[0].postalCode || 'N/A',
+                // Use provided city or a fallback message if not available.
+                city: event.city || 'City not available',
+                // Use provided state code or a fallback message if not available.
+                stateCode: event.stateCode || 'State not available',
             }));
         }
 
