@@ -241,6 +241,12 @@ body {
   margin-bottom: 1rem;
 }
 
+.modal-content h3 {
+  color: var(--primary-color);
+  text-align: lrft;
+  margin-bottom: 1rem;
+}
+
 /* Close Button */
 .close-btn, .close-signup-btn, .close-login-btn {
   float: right;
