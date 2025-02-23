@@ -11,6 +11,7 @@
         <header class="main-header">
             <h1>AroundU<br><div class="sub-h1">Find Events Near You</div></h1>
             <button id="openSignupBtn" class="signup-button">Sign Up</button>
+            <button id="openLoginBtn" class="login-button">Log In</button>
         </header>
 
         <!-- Main Layout Container -->
@@ -161,6 +162,25 @@
                         </div>
                         <button type="submit">Register</button>
                     </form>
+                </div>
+            </div>
+
+            <div id="login-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-login-btn">&times;</span>
+                    <h2>Log In</h2>
+                    <form id="loginForm" class="login-form">
+                        <div class="form-row">
+                            <label>Email</label>
+                            <input type="email" name="Email" required />
+                        </div>
+                        <div class="form-row">
+                            <label>Password</label>
+                            <input type="password" name="Password" required />
+                        </div>
+                        <button type="submit">Login</button>
+                    </form>
+
                 </div>
             </div>
 

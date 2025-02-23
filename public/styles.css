@@ -242,14 +242,14 @@ body {
 }
 
 /* Close Button */
-.close-btn, .close-signup-btn {
+.close-btn, .close-signup-btn, .close-login-btn {
   float: right;
   font-size: 24px;
   color: #666;
   cursor: pointer;
 }
 
-.close-btn:hover, .close-signup-btn:hover {
+.close-btn:hover, .close-signup-btn:hover, .close-login-btn:hover {
   color: var(--primary-color);
 }
 
@@ -272,7 +272,7 @@ body {
 .signup-button {
   position: absolute;
   right: 0px;
-  top: 50%;
+  top: 60%;
   transform: translate(-50%);
   background-color: var(--primary-color);
   color: white;
@@ -342,5 +342,51 @@ body {
   transition: background-color 0.3s ease;
 }
 .signup-form button[type="submit"]:hover {
+  background-color: var(--hover-color);
+}
+
+.login-button {
+  position: absolute;
+  right: 130px; /* so it's near the sign up button if you want them side-by-side */
+  top: 75%;
+  transform: translateY(-50%);
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.login-button:hover {
+  background-color: var(--hover-color);
+}
+
+#login-modal .modal-content {
+  width: 60%;
+  max-height: 80vh;
+}
+
+.login-form {
+  margin: 0 auto;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-form button[type="submit"] {
+  align-self: center; /* center the button horizontally */
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.login-form button[type="submit"]:hover {
   background-color: var(--hover-color);
 }
