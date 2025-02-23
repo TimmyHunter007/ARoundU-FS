@@ -10,6 +10,7 @@
 
         <header class="main-header">
             <h1>AroundU - Find Events Near You</h1>
+            <button id="openSignupBtn" class="signup-button">Sign Up</button>
         </header>
 
         <!-- Main Layout Container -->
@@ -129,29 +130,33 @@
                 <!-- Populated dynamically via JS -->
             </div>
 
-            <h1>Sign Up</h1>
-  <form id="signupForm">
-    <label>First Name</label>
-    <input type="text" name="firstName" required /><br><br>
+            <div id="signup-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-signup-btn">&times;</span>
+                    <h2>Sign Up</h2>
+                    <form id="signupForm">
+                        <label>First Name</label>
+                        <input type="text" name="firstName" required /><br><br>
 
-    <label>Last Name</label>
-    <input type="text" name="lastName" required /><br><br>
+                        <label>Last Name</label>
+                        <input type="text" name="lastName" required /><br><br>
 
-    <label>Email</label>
-    <input type="email" name="email" required /><br><br>
+                        <label>Email</label>
+                        <input type="email" name="email" required /><br><br>
 
-    <label>Password</label>
-    <input type="password" name="password" required /><br><br>
+                        <label>Password</label>
+                        <input type="password" name="password" required /><br><br>
 
-    <label>Confirm Password</label>
-    <input type="password" name="confirmPassword" required /><br><br>
+                        <label>Confirm Password</label>
+                        <input type="password" name="confirmPassword" required /><br><br>
 
-    <label>Date of Birth</label>
-    <input type="date" name="dateOfBirth" required /><br><br>
+                        <label>Date of Birth</label>
+                        <input type="date" name="dateOfBirth" required /><br><br>
 
-    <button type="submit">Register</button>
-  </form>
-
+                        <button type="submit">Register</button>
+                    </form>
+                </div>
+            </div>
   <script>
     const form = document.getElementById('signupForm');
     form.addEventListener('submit', async (e) => {

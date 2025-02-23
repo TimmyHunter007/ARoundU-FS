@@ -20,6 +20,7 @@ body {
 
 /* Header */
 .main-header {
+  position: relative;
   text-align: center;
   background-color: var(--secondary-color);
   color: white;
@@ -256,4 +257,23 @@ body {
   .map-wrapper #map {
     height: 300px;
   }
+}
+
+.signup-button {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translate(-50%);
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signup-button:hover {
+  background-color: var(--hover-color);
 }

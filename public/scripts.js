@@ -56,6 +56,71 @@ function initMap() {
     });
 }
 
+function setupSignupModal() {
+    const openBtn = document.getElementById('openSignupBtn');
+    const signupModal = document.getElementById('signup-modal');
+    const closeSignupBtn = document.querySelector('.close-signup-btn');
+
+    // Open the modal
+    openBtn.addEventListener('click', () => {
+        signupModal.style.display = 'block';
+    });
+
+    // Close button
+    closeSignupBtn.addEventListener('click', () => {
+        signupModal.style.display = 'none';
+    });
+
+    // Close if user clicks outside the modal
+    window.addEventListener('click', (event) => {
+        if (event.target === signupModal) {
+            signupModal.style.display = 'none';
+        }
+    });
+}
+
+function setupSignupForm() {
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+
+        const data = {
+            firstName: formData.get('firstName'),
+            lastName: formData.get('lastName'),
+            email: formData.get('email'),
+            password: formData.get('password'),
+            confirmPassword: formData.get('confirmPassword'),
+            dateOfBirth: formData.get('dateOfBirth'),
+        };
+
+        try {
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+            if (!response.ok) {
+                alert(result.error || 'Error registering');
+            } else {
+            alert('User registered successfully!');
+                document.getElementById('signup-modal').style.display = 'none';
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Server error');
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    setupSignupModal();
+    setupSignupForm();
+    updateDateTime();
+});
+
 /**
  * Formats a date and time string into a human-readable format.
  *
