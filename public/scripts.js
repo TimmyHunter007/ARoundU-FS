@@ -412,7 +412,7 @@ function openModal(event) {
         <h3>Event Details</h3>
         <p>${event.description}</p>
         <h3>Location</h3>
-        <p>${event.address} ${event.city}, ${event.stateCode} ${event.postalcode}</p>
+        <p>${event.venuename}<br>${event.address} ${event.city}, ${event.stateCode} ${event.postalcode}</p>
     `;
     
     // Display the modal.
