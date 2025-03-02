@@ -399,7 +399,7 @@ body {
 
 .ticket-button {
   position: absolute;
-  top: 12px;
+  top: 15px;
   background-color: var(--secondary-color);
   color: white;
   border: none;
