@@ -398,6 +398,7 @@ body {
 }
 
 .ticket-button {
+  position: absolute;
   background-color: var(--secondary-color);
   color: white;
   border: none;
@@ -409,4 +410,7 @@ body {
 }
 .ticket-button:hover {
   background-color: #123939;
+}
+.ticket-button a {
+  text-decoration: none;
 }
