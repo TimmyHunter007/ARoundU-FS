@@ -407,11 +407,9 @@ body {
   font-size: 1rem;
   border-radius: 8px;
   cursor: pointer;
+  text-decoration: none;
   transition: background-color 0.3s ease;
 }
 .ticket-button:hover {
   background-color: #123939;
-}
-.ticket-button a {
-  text-decoration: none;
 }
