@@ -407,6 +407,7 @@ function openModal(event) {
     modalDetails.innerHTML = `
         <h2>${event.name}</h2>
         <h3 style="text-align: center;">${formatDateTime(event.date, event.time)}</h3>
+        <a href="${event.tmurl}" target="_blank">Buy Ticket</a>
         <hr>
         <h3>Event Details</h3>
         <p>${event.description}</p>
