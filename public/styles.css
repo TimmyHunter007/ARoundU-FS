@@ -396,3 +396,17 @@ body {
 .login-form button[type="submit"]:hover {
   background-color: var(--hover-color);
 }
+
+.ticket-button {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.ticket-button:hover {
+  background-color: #123939;
+}
