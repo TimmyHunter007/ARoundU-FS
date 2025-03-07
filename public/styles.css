@@ -1,6 +1,11 @@
-/* Global */
+/* ======================================================================
+   Global Styles & Imports
+   ====================================================================== */
+
+/* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
+/* Global Body Styles */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -8,7 +13,7 @@ body {
   color: #333;
 }
 
-/* Colors */
+/* CSS Variables for Colors and Common Values */
 :root {
   --primary-color: #b85c30; /* Dark Burnt Orange */
   --secondary-color: #1b4d4d; /* Dark Teal */
@@ -18,7 +23,10 @@ body {
   --hover-color: #964b29; /* Slightly darker burnt orange for hover */
 }
 
-/* Header */
+/* ======================================================================
+   Header Styles
+   ====================================================================== */
+
 .main-header {
   position: relative;
   text-align: center;
@@ -37,7 +45,10 @@ body {
   font-size: 20px;
 }
 
-/* Layout */
+/* ======================================================================
+   Layout Container & Panels
+   ====================================================================== */
+
 .layout-container {
   display: grid;
   grid-template-columns: 270px 270px 1fr;
@@ -50,7 +61,7 @@ body {
   margin: auto;
 }
 
-/* Panels */
+/* Search & Filter Panels */
 .search-panel, .filter-panel {
   background-color: var(--background-light);
   padding: 20px;
@@ -66,7 +77,14 @@ body {
   font-weight: 600;
 }
 
-.search-fields input, .filter-section input, .filter-section select {
+/* ======================================================================
+   Form & Input Fields in Panels
+   ====================================================================== */
+
+/* Inputs for search fields, filter sections */
+.search-fields input, 
+.filter-section input, 
+.filter-section select {
   padding: 10px;
   font-size: 1rem;
   border: 1px solid #d1d1d1;
@@ -75,13 +93,17 @@ body {
   transition: all 0.3s ease;
 }
 
-.search-fields input:focus, .filter-section input:focus, .filter-section select:focus {
+/* Focus state for inputs and selects */
+.search-fields input:focus, 
+.filter-section input:focus, 
+.filter-section select:focus {
   border-color: var(--primary-color);
   background-color: white;
   outline: none;
   box-shadow: 0 0 8px rgba(184, 92, 48, 0.3);
 }
 
+/* Search Button Styles */
 .search-fields button {
   background-color: var(--primary-color);
   color: white;
@@ -97,7 +119,11 @@ body {
   background-color: var(--hover-color);
 }
 
-/* Map */
+/* ======================================================================
+   Map & Events Container Styles
+   ====================================================================== */
+
+/* Map Wrapper */
 .map-wrapper {
   grid-area: map;
   border-radius: 12px;
@@ -118,7 +144,11 @@ body {
   gap: 20px;
 }
 
-/* Cards */
+/* ======================================================================
+   Card Component Styles
+   ====================================================================== */
+
+/* Card Base */
 .card {
   background-color: var(--background-light);
   padding: 16px;
@@ -148,12 +178,14 @@ body {
   color: #666;
 }
 
+/* Card Actions Section */
 .card-actions {
   margin-top: 10px;
   display: flex;
   justify-content: center;
 }
 
+/* Card Content with fading effect */
 .card-content {
   max-height: 300px; /* Restrict visible content */
   overflow: hidden;
@@ -171,6 +203,7 @@ body {
   pointer-events: none;
 }
 
+/* Expanded card view */
 .card.expanded .card-content {
   max-height: none;
 }
@@ -179,13 +212,14 @@ body {
   display: none;
 }
 
-/* Fix for Read More button */
+/* Adjust margin for Read More button container */
 .card-actions {
   margin-top: 12px;
   display: flex;
   justify-content: center;
 }
 
+/* Read More Button */
 .read-more-btn {
   background-color: var(--secondary-color);
   color: white;
@@ -200,8 +234,11 @@ body {
   background-color: #123939; /* Darker Teal */
 }
 
-/* Modal */
-/* Pop-up Box Modal Styles */
+/* ======================================================================
+   Modal Styles
+   ====================================================================== */
+
+/* Modal Overlay */
 .modal {
   display: none; /* Hidden by default */
   position: fixed;
@@ -210,31 +247,29 @@ body {
   width: 100%;
   height: 100%;
   z-index: 1000;
-
   /* Dim the background with a semi-transparent black overlay */
   background-color: rgba(0, 0, 0, 0.5); 
 }
 
 /* Centered Modal Box */
 .modal-content {
-  /* Center it with absolute + transform */
+  /* Center modal with absolute positioning and transform */
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  /* Set width to ~75% */
+  /* Set width and allow scrolling if content is too tall */
   width: 75%;
-  max-height: 80vh; /* let it scroll if content is too tall */
+  max-height: 80vh;
   overflow-y: auto;
-
-  /* Style it */
+  /* Style modal content */
   background-color: var(--background-light);
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
+/* Modal Headings */
 .modal-content h2, h3 {
   color: var(--primary-color);
   text-align: center;
@@ -247,7 +282,7 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Close Button */
+/* Close Button Styles for Modals */
 .close-btn, .close-signup-btn, .close-login-btn {
   float: right;
   font-size: 24px;
@@ -259,7 +294,10 @@ body {
   color: var(--primary-color);
 }
 
-/* Responsive */
+/* ======================================================================
+   Responsive Styles
+   ====================================================================== */
+
 @media (max-width: 768px) {
   .layout-container {
     grid-template-columns: 1fr;
@@ -269,12 +307,16 @@ body {
       "map"
       "events";
   }
-
   .map-wrapper #map {
     height: 300px;
   }
 }
 
+/* ======================================================================
+   Sign Up & Login Button Styles
+   ====================================================================== */
+
+/* Sign Up Button (in Header) */
 .signup-button {
   position: absolute;
   right: 0px;
@@ -294,33 +336,58 @@ body {
   background-color: var(--hover-color);
 }
 
-/* The sign-up form */
-.signup-form {
-  /* Center the form column inside the modal */
-  margin: 0 auto;
-  max-width: 500px; /* Limits how wide the form rows can get */
-  display: flex;
-  flex-direction: column;
-  gap: 1rem; /* Space between rows */
+/* Login Button (in Header) */
+.login-button {
+  position: absolute;
+  right: 130px; /* Positioned near the sign-up button */
+  top: 75%;
+  transform: translateY(-50%);
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* Each row: label on the left, input on the right */
+.login-button:hover {
+  background-color: var(--hover-color);
+}
+
+/* ======================================================================
+   Sign Up Form Styles
+   ====================================================================== */
+
+/* Sign-up form container */
+.signup-form {
+  /* Center the form inside the modal */
+  margin: 0 auto;
+  max-width: 500px; /* Limits width of form rows */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Space between form rows */
+}
+
+/* Individual form row styling */
 .form-row {
   display: flex;
   align-items: center;
 }
 
-/* Make label a bit narrower, and the input expand */
+/* Label styling within form rows */
 .form-row label {
   width: 35%;
-  min-width: 120px; /* to keep it from getting too small */
+  min-width: 120px; /* Prevents label from being too narrow */
   margin-right: 8px;
   text-align: right;
   font-weight: 600;
 }
 
+/* Input field styling within form rows */
 .form-row input {
-  flex: 1; /* let the input expand to fill the remaining space */
+  flex: 1; /* Allow input to fill remaining space */
   padding: 8px;
   border: 1px solid #d1d1d1;
   border-radius: 8px;
@@ -335,9 +402,9 @@ body {
   box-shadow: 0 0 8px rgba(184, 92, 48, 0.3);
 }
 
-/* Submit button */
+/* Submit button in the sign-up form */
 .signup-form button[type="submit"] {
-  align-self: center; /* center the button horizontally */
+  align-self: center; /* Center the button horizontally */
   background-color: var(--primary-color);
   color: white;
   border: none;
@@ -347,27 +414,14 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
 .signup-form button[type="submit"]:hover {
   background-color: var(--hover-color);
 }
 
-.login-button {
-  position: absolute;
-  right: 130px; /* so it's near the sign up button if you want them side-by-side */
-  top: 75%;
-  transform: translateY(-50%);
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 12px;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.login-button:hover {
-  background-color: var(--hover-color);
-}
+/* ======================================================================
+   Login Form Styles
+   ====================================================================== */
 
 #login-modal .modal-content {
   width: 60%;
@@ -383,7 +437,7 @@ body {
 }
 
 .login-form button[type="submit"] {
-  align-self: center; /* center the button horizontally */
+  align-self: center; /* Center the login button */
   background-color: var(--primary-color);
   color: white;
   border: none;
@@ -393,9 +447,14 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
 .login-form button[type="submit"]:hover {
   background-color: var(--hover-color);
 }
+
+/* ======================================================================
+   Ticket Button Styles (for event modals)
+   ====================================================================== */
 
 .ticket-button {
   position: absolute;
@@ -410,6 +469,39 @@ body {
   text-decoration: none;
   transition: background-color 0.3s ease;
 }
+
 .ticket-button:hover {
   background-color: #123939;
+}
+
+/* ======================================================================
+   Profile Page Styles
+   ====================================================================== */
+
+.profile-page-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.profile-actions {
+  margin-bottom: 2rem;
+}
+
+.profile-container {
+  display: inline-block;
+  text-align: left;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.profile-container h2 {
+  margin-top: 0;
+}
+
+.profile-buttons button {
+  margin: 0 8px;
 }

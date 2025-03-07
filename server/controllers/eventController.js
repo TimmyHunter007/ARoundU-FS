@@ -87,10 +87,10 @@ const getEvents = async (req, res) => {
                 city: event._embedded.venues[0].city.name || 'City not available',
                 // Use provided state code or a fallback message if not available.
                 stateCode: event._embedded.venues[0].state.stateCode || 'State not available',
-                // Use provided link to ticketmaster site to purchase ticket or a fall back message if not available
+                // Use provided link to Ticketmaster site to purchase ticket or a fallback message if not available.
                 tmurl: event.url || 'Link not available',
-                // Use provided venue name or a fall back message if not available
-                venuename : event._embedded.venues[0].name || 'Vanue not available',
+                // Use provided venue name or a fallback message if not available.
+                venuename: event._embedded.venues[0].name || 'Vanue not available',
             }));
         }
 

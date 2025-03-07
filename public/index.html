@@ -1,64 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- Set character encoding -->
         <meta charset="UTF-8">
+        <!-- Title that appears in the browser tab -->
         <title>AroundU</title>
+        <!-- Link to the external stylesheet for page styling -->
         <link rel="stylesheet" href="styles.css">
+        <!-- Favicon for the browser tab -->
         <link rel="icon" type="image/x-icon" href="favicon.ico">
     </head>
     <body>
 
+        <!-- Header section containing the title and authentication buttons -->
         <header class="main-header">
-            <h1>AroundU<br><div class="sub-h1">Find Events Near You</div></h1>
+            <!-- Main title with a subheading -->
+            <h1>AroundU<br>
+                <div class="sub-h1">Find Events Near You</div>
+            </h1>
+            <!-- Button to open the Sign Up modal -->
             <button id="openSignupBtn" class="signup-button">Sign Up</button>
+            <!-- Button to open the Log In modal -->
             <button id="openLoginBtn" class="login-button">Log In</button>
+            
+            <!-- Container to display welcome message after login; hidden by default -->
+            <span id="welcomeContainer" style="display: none;">
+                Welcome, <span id="welcomeName"></span>!
+                <!-- Button to navigate to the Profile page -->
+                <button id="profileBtn" class="login-button">Profile</button>
+                <!-- Button to logout from the current session -->
+                <button id="logoutBtnIndex" class="login-button">Logout</button>
+            </span>
         </header>
 
-        <!-- Main Layout Container -->
+        <!-- Main Layout Container wrapping the search, filter, map, and events sections -->
         <div class="layout-container">
 
             <!-- Search Panel -->
             <div class="search-panel">
                 <h2>Search</h2>
                 <div class="search-fields">
+                    <!-- Input field for search radius (in miles) -->
                     <label for="radius">Miles</label>
                     <input id="radius" type="number" placeholder="10" />
-
                     <br><br>
-
+                    <!-- Button to trigger the search functionality -->
                     <button id="searchBtn">Search</button>
-
+                    <!-- Element to display the current date/time -->
                     <p id="current-time">. . .</p>
                 </div>
             </div>
 
-            <!-- Filter Panel -->
+            <!-- Filter Panel for additional search filters -->
             <div class="filter-panel">
                 <h2>Filter</h2>
-
                 <div class="filter-fields">
-                    <!-- Date Range -->
+                    <!-- Section for filtering by event date -->
                     <div class="filter-section">
                         <h3>Event Date</h3>
+                        <!-- Input field for the event date with a pattern for the format -->
                         <input type="date" id="single-date" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD"/>
                     </div>
 
-                    <!-- Event Type -->
+                    <!-- Section for filtering by event type -->
                     <div class="filter-section">
                         <h3>Event Type</h3>
+                        <!-- Dropdown select for event types -->
                         <select id="event-type">
-                        <option value="">All Types</option>
-                        <!-- Future: Populate these from Ticketmaster categories -->
-                        <option value="music">Music</option>
-                        <option value="sports">Sports</option>
-                        <option value="comedy">Comedy</option>
-                        <option value="theater">Theater</option>
+                            <option value="">All Types</option>
+                            <!-- These options can be dynamically populated in the future -->
+                            <option value="music">Music</option>
+                            <option value="sports">Sports</option>
+                            <option value="comedy">Comedy</option>
+                            <option value="theater">Theater</option>
                         </select>
                     </div>
 
-                    <!-- Time of Event -->
+                    <!-- Section for filtering by start time of the event -->
                     <div class="filter-section">
                         <h3>Start time of Event</h3>
+                        <!-- Dropdown select for event start times -->
                         <select id="startTime">
                             <option value="">Any Time</option>
                             <option value="T00:00:00Z">12:00 AM</option>
@@ -86,55 +107,38 @@
                             <option value="T22:00:00Z">10:00 PM</option>
                             <option value="T23:00:00Z">11:00 PM</option>
                         </select>
-                        <!--
+                        <!-- 
+                        Commented-out section for an "End Time" filter. This could be enabled in the future if needed.
                         <label>End Time</label>
                         <select id="endTime">
                             <option value="T23:59:59Z">Any Time</option>
                             <option value="T00:00:00Z">12:00 AM</option>
                             <option value="T01:00:00Z">1:00 AM</option>
-                            <option value="T02:00:00Z">2:00 AM</option>
-                            <option value="T03:00:00Z">3:00 AM</option>
-                            <option value="T04:00:00Z">4:00 AM</option>
-                            <option value="T05:00:00Z">5:00 AM</option>
-                            <option value="T06:00:00Z">6:00 AM</option>
-                            <option value="T07:00:00Z">7:00 AM</option>
-                            <option value="T08:00:00Z">8:00 AM</option>
-                            <option value="T09:00:00Z">9:00 AM</option>
-                            <option value="T10:00:00Z">10:00 AM</option>
-                            <option value="T11:00:00Z">11:00 AM</option>
-                            <option value="T12:00:00Z">12:00 PM</option>
-                            <option value="T13:00:00Z">1:00 PM</option>
-                            <option value="T14:00:00Z">2:00 PM</option>
-                            <option value="T15:00:00Z">3:00 PM</option>
-                            <option value="T16:00:00Z">4:00 PM</option>
-                            <option value="T17:00:00Z">5:00 PM</option>
-                            <option value="T18:00:00Z">6:00 PM</option>
-                            <option value="T19:00:00Z">7:00 PM</option>
-                            <option value="T20:00:00Z">8:00 PM</option>
-                            <option value="T21:00:00Z">9:00 PM</option>
-                            <option value="T22:00:00Z">10:00 PM</option>
-                            <option value="T23:00:00Z">11:00 PM</option>
+                            ... more time options ...
                         </select>
-                    -->
+                        -->
                     </div>
-                </div><!-- /.filter-fields -->
-            
+                </div><!-- End of filter-fields -->
             </div>
 
-            <!-- Map -->
+            <!-- Map Container -->
             <div class="map-wrapper">
+                <!-- Div where the Google Map will be rendered -->
                 <div id="map"></div>
             </div>
 
-                <!-- Events Row -->
+            <!-- Events Container -->
             <div class="events-container" id="events-container">
-                <!-- Populated dynamically via JS -->
+                <!-- This section will be populated dynamically with event cards via JavaScript -->
             </div>
 
+            <!-- Sign Up Modal -->
             <div id="signup-modal" class="modal">
                 <div class="modal-content">
+                    <!-- Button to close the modal -->
                     <span class="close-signup-btn">&times;</span>
                     <h2>Sign Up</h2>
+                    <!-- Sign Up form -->
                     <form id="signupForm" class="signup-form">
                         <div class="form-row">
                             <label>First Name</label>
@@ -160,15 +164,19 @@
                             <label>Date of Birth</label>
                             <input type="date" name="dateOfBirth" required />
                         </div>
+                        <!-- Submit button for registration -->
                         <button type="submit">Register</button>
                     </form>
                 </div>
             </div>
 
+            <!-- Log In Modal -->
             <div id="login-modal" class="modal">
                 <div class="modal-content">
+                    <!-- Button to close the modal -->
                     <span class="close-login-btn">&times;</span>
                     <h2>Log In</h2>
+                    <!-- Log In form -->
                     <form id="loginForm" class="login-form">
                         <div class="form-row">
                             <label>Email</label>
@@ -178,25 +186,28 @@
                             <label>Password</label>
                             <input type="password" name="password" required />
                         </div>
+                        <!-- Submit button for login -->
                         <button type="submit">Login</button>
                     </form>
-
                 </div>
             </div>
 
+            <!-- Event Details Modal -->
             <div id="event-modal" class="modal">
                 <div class="modal-content">
+                    <!-- Button to close the event modal -->
                     <span class="close-btn">&times;</span>
+                    <!-- Container for dynamic event details -->
                     <div id="modal-details"></div>
                 </div>
             </div>              
 
-        </div><!-- /.layout-container -->
+        </div><!-- End of layout-container -->
 
-        <!-- Google Maps Script -->
+        <!-- Load the Google Maps API script with required key, libraries, and callback -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJRa9QY6RF9ooPsZ1OpVNmMO6enp4mnqA&libraries=marker&callback=initMap&mapIds=5c290e9e653ba24a" async defer></script>
 
-        <!-- Your scripts.js -->
+        <!-- Include custom JavaScript file that handles map initialization, events, and modals -->
         <script src="scripts.js"></script>
     </body>
 </html>

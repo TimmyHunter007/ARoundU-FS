@@ -1,115 +1,136 @@
+// Wait until the entire DOM content has loaded before executing the code.
 document.addEventListener('DOMContentLoaded', () => {
-    // Get the JWT token from localStorage (set during login)
+    // Retrieve the token from local storage.
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('Please log in first.');
-      window.location.href = 'index.html'; // Redirect to home or login page
-      return;
+        // If no token is found, redirect the user to the home page to log in.
+        window.location.href = 'index.html';
+        return;
     }
-    
-    // Fetch and display profile details on page load.
+
+    // If a token exists, fetch and display the user's profile details.
     fetchProfile(token);
-    
-    // Set up the form submission to update the profile.
+
+    // Add an event listener to handle profile form submission for updating profile details.
     document.getElementById('profileForm').addEventListener('submit', updateProfile);
-  });
-  
-  /**
-   * Fetch and display the user's profile via the protected endpoint.
-   */
-  function fetchProfile(token) {
+
+    // Add an event listener to the "Home" button to redirect to the home page.
+    document.getElementById('homeBtn').addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+
+    // Add an event listener to the "Logout" button to remove the token and redirect to the home page.
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        localStorage.removeItem('token');
+        window.location.href = 'index.html';
+    });
+});
+
+/**
+ * Fetch profile details using the provided token and display them on the page.
+ */
+function fetchProfile(token) {
     fetch('/api/auth/profile', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.error) {
-          alert(data.error);
-          return;
+        method: 'GET',
+        headers: {
+            // Send the token as a Bearer token in the Authorization header.
+            Authorization: `Bearer ${token}`
         }
-        // Populate the form fields.
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            // If an error occurs (e.g., token expired), alert the user and redirect to home.
+            alert(data.error);
+            window.location.href = 'index.html';
+            return;
+        }
+        // Display profile details in a read-only format.
+        displayProfileDetails(data);
+
+        // Populate the profile form fields with the fetched data.
         document.getElementById('firstName').value = data.firstName;
         document.getElementById('lastName').value = data.lastName;
         document.getElementById('email').value = data.email;
-        
-        // Format date of birth (assuming data.dateOfBirth is an ISO string).
+
+        // Format the date of birth into YYYY-MM-DD format for the date input.
         const dob = new Date(data.dateOfBirth);
         const month = String(dob.getMonth() + 1).padStart(2, '0');
         const day = String(dob.getDate()).padStart(2, '0');
-        document.getElementById('dateOfBirth').value = `${dob.getFullYear()}-${month}-${day}`;
-        
-        // Also display the details in a read-only section
-        displayProfileDetails(data);
-      })
-      .catch(err => {
+        const year = dob.getFullYear();
+        document.getElementById('dateOfBirth').value = `${year}-${month}-${day}`;
+    })
+    .catch(err => {
+        // Log any error and alert the user if profile fetching fails.
         console.error(err);
-        alert('Error fetching profile.');
-      });
-  }
-  
-  /**
-   * Display profile details in a read-only area on the page.
-   */
-  function displayProfileDetails(data) {
+        alert('Error fetching profile');
+    });
+}
+
+/**
+ * Display profile details in the "Your Profile Details" area.
+ */
+function displayProfileDetails(user) {
     const detailsDiv = document.getElementById('profile-details');
+    // Create HTML content for profile details.
     detailsDiv.innerHTML = `
-      <p><strong>First Name:</strong> ${data.firstName}</p>
-      <p><strong>Last Name:</strong> ${data.lastName}</p>
-      <p><strong>Email:</strong> ${data.email}</p>
-      <p><strong>Date of Birth:</strong> ${new Date(data.dateOfBirth).toLocaleDateString()}</p>
+        <p><strong>First Name:</strong> ${user.firstName}</p>
+        <p><strong>Last Name:</strong> ${user.lastName}</p>
+        <p><strong>Email:</strong> ${user.email}</p>
+        <p><strong>Date of Birth:</strong> ${new Date(user.dateOfBirth).toLocaleDateString()}</p>
     `;
-  }
-  
-  /**
-   * Handle form submission to update the user profile.
-   */
-  function updateProfile(e) {
+}
+
+/**
+ * Handle updating the user profile when the profile form is submitted.
+ */
+function updateProfile(e) {
+    // Prevent the default form submission behavior.
     e.preventDefault();
-    
+    // Retrieve the token from local storage.
     const token = localStorage.getItem('token');
-    if (!token) {
-      alert('Please log in first.');
-      return;
-    }
-    
-    // Gather updated values from the form
+    if (!token) return;
+
+    // Get the updated input values from the form fields.
     const firstName = document.getElementById('firstName').value.trim();
     const lastName = document.getElementById('lastName').value.trim();
     const dateOfBirth = document.getElementById('dateOfBirth').value;
     const password = document.getElementById('password').value.trim();
-    
-    // Build the data object. Only include password if provided.
+
+    // Build the updated data object with the profile details.
     const updatedData = { firstName, lastName, dateOfBirth };
+    // If a new password is provided, include it in the update.
     if (password) {
-      updatedData.password = password;
+        updatedData.password = password;
     }
-    
+
+    // Send a PUT request to update the profile.
     fetch('/api/auth/profile', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify(updatedData)
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            // Include the token in the Authorization header.
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(updatedData)
     })
-      .then(response => response.json())
-      .then(result => {
+    .then(res => res.json())
+    .then(result => {
         if (result.error) {
-          alert(result.error);
+            // Alert the user if an error occurred during the update.
+            alert(result.error);
         } else {
-          alert(result.message || 'Profile updated successfully!');
-          // Update the displayed details
-          displayProfileDetails(result.user);
-          // Clear the password field
-          document.getElementById('password').value = '';
+            // Notify the user that the profile was updated successfully.
+            alert(result.message || 'Profile updated!');
+            // Refresh the displayed profile details with updated data.
+            displayProfileDetails(result.user);
+            // Clear the password field after update.
+            document.getElementById('password').value = '';
         }
-      })
-      .catch(err => {
+    })
+    .catch(err => {
+        // Log any errors and alert the user if the update fails.
         console.error(err);
-        alert('Error updating profile.');
-      });
-  }
-  
+        alert('Error updating profile');
+    });
+}

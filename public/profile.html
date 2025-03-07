@@ -1,55 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- Character encoding for proper text rendering -->
         <meta charset="UTF-8">
+        <!-- Page title shown in the browser tab -->
         <title>AroundU</title>
+        <!-- Link to the external CSS stylesheet for styling the page -->
         <link rel="stylesheet" href="styles.css">
+        <!-- Favicon for the browser tab -->
         <link rel="icon" type="image/x-icon" href="favicon.ico">
     </head>
     <body>
-    <header class="main-header">
-        <h1>User Profile</h1>
-    </header>
-    
-    <div class="layout-container" style="padding: 24px;">
-        <div class="profile-container">
-        <h2>Your Profile Details</h2>
-        <!-- Display current profile details -->
-        <div id="profile-details">
-            <!-- Profile info will be injected here -->
+        <!-- Main header section displaying the page title -->
+        <header class="main-header">
+            <h1>User Profile</h1>
+        </header>
+        
+        <!-- Main container for the profile page content -->
+        <div class="profile-page-container">
+            <!-- Container for action buttons (Home and Logout) -->
+            <div class="profile-actions profile-buttons">
+                <!-- "Home" button to navigate back to the home page -->
+                <button id="homeBtn" class="login-button">Home</button>
+                <!-- "Logout" button to sign the user out -->
+                <button id="logoutBtn" class="login-button">Logout</button>
+            </div>
+            <!-- Layout container for profile details and edit form, with padding for spacing -->
+            <div class="layout-container" style="padding: 24px;">
+                <!-- Container holding both the read-only profile details and the edit form -->
+                <div class="profile-container">
+                    <!-- Section heading for displaying current profile details -->
+                    <h2>Your Profile Details</h2>
+                    <!-- Div where profile details will be dynamically injected by JavaScript -->
+                    <div id="profile-details">
+                        <!-- Profile info will be injected here -->
+                    </div>
+                    
+                    <!-- Section heading for the profile editing area -->
+                    <h3>Edit Profile</h3>
+                    <!-- Form for updating profile details -->
+                    <form id="profileForm" class="signup-form">
+                        <!-- Form row for First Name -->
+                        <div class="form-row">
+                            <label>First Name</label>
+                            <input type="text" name="firstName" id="firstName" required />
+                        </div>
+                        <!-- Form row for Last Name -->
+                        <div class="form-row">
+                            <label>Last Name</label>
+                            <input type="text" name="lastName" id="lastName" required />
+                        </div>
+                        <!-- Form row for Email (read-only) -->
+                        <div class="form-row">
+                            <label>Email</label>
+                            <input type="email" name="email" id="email" disabled />
+                        </div>
+                        <!-- Form row for Date of Birth -->
+                        <div class="form-row">
+                            <label>Date of Birth</label>
+                            <input type="date" name="dateOfBirth" id="dateOfBirth" required />
+                        </div>
+                        <!-- Form row for updating password (optional) -->
+                        <div class="form-row">
+                            <label>New Password</label>
+                            <!-- Placeholder instructs to leave blank if password change is not desired -->
+                            <input type="password" name="password" id="password" placeholder="Leave blank to keep unchanged" />
+                        </div>
+                        <!-- Submit button to trigger profile update -->
+                        <button type="submit">Update Profile</button>
+                    </form>
+                </div>
+            </div>
         </div>
         
-        <h3>Edit Profile</h3>
-        <!-- Form for updating profile details -->
-        <form id="profileForm" class="signup-form">
-            <div class="form-row">
-            <label>First Name</label>
-            <input type="text" name="firstName" id="firstName" required />
-            </div>
-            <div class="form-row">
-            <label>Last Name</label>
-            <input type="text" name="lastName" id="lastName" required />
-            </div>
-            <div class="form-row">
-            <label>Email</label>
-            <!-- Email is shown as read-only -->
-            <input type="email" name="email" id="email" disabled />
-            </div>
-            <div class="form-row">
-            <label>Date of Birth</label>
-            <input type="date" name="dateOfBirth" id="dateOfBirth" required />
-            </div>
-            <div class="form-row">
-            <label>New Password</label>
-            <!-- Leave blank if you don't want to change the password -->
-            <input type="password" name="password" id="password" placeholder="Leave blank to keep unchanged" />
-            </div>
-            <button type="submit">Update Profile</button>
-        </form>
-        </div>
-    </div>
-    
-    <!-- Include profile.js from the same folder -->
-    <script src="profile.js"></script>
+        <!-- Link to the JavaScript file that contains the profile logic -->
+        <script src="profile.js"></script>
     </body>
 </html>

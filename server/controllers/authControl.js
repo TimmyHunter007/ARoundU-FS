@@ -1,36 +1,36 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const bcrypt = require('bcryptjs'); // Import bcrypt for password hashing.
+const jwt = require('jsonwebtoken'); // Import jsonwebtoken for JWT operations.
+const User = require('../models/User'); // Import the User model.
 
-// e.g., JWT_SECRET="someSuperSecretKey"
-const JWT_SECRET = process.env.JWT_SECRET || 'test_secret_key';
+const JWT_SECRET = process.env.JWT_SECRET || 'test_secret_key'; // JWT secret key from environment or fallback.
 
 // ---------------------- REGISTER ----------------------
 exports.register = async (req, res) => {
     try {
+        // Destructure required fields from the request body.
         const { firstName, lastName, email, password, confirmPassword, dateOfBirth } = req.body;
 
-        // 1. Check if all fields are present
+        // Validate that all required fields are provided.
         if (!firstName || !lastName || !email || !password || !confirmPassword || !dateOfBirth) {
             return res.status(400).json({ error: 'All fields are required.' });
         }
 
-        // 2. Check if password and confirmPassword match
+        // Check if the password and confirmPassword match.
         if (password !== confirmPassword) {
             return res.status(400).json({ error: 'Passwords do not match.' });
         }
 
-        // 3. Check if user with this email already exists
+        // Check if a user with the given email already exists.
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ error: 'Email is already registered.' });
         }
 
-        // 4. Hash the password
+        // Hash the password using bcrypt.
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        // 5. Create user
+        // Create a new user document in the database.
         const newUser = await User.create({
             firstName,
             lastName,
@@ -39,7 +39,7 @@ exports.register = async (req, res) => {
             dateOfBirth,
         });
 
-        // 6. Return success (optionally create a token and log them in)
+        // Respond with success message and the newly created user's basic info.
         return res.status(201).json({
             message: 'User registered successfully',
             user: {
@@ -56,31 +56,32 @@ exports.register = async (req, res) => {
 // ---------------------- LOGIN ----------------------
 exports.login = async (req, res) => {
     try {
+        // Extract email and password from the request body.
         const { email, password } = req.body;
 
-        // 1. Check for fields
+        // Validate that both email and password are provided.
         if (!email || !password) {
             return res.status(400).json({ error: 'Email and password are required.' });
         }
 
-        // 2. Find user by email
+        // Find the user by email.
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ error: 'Invalid email or password.' });
         }
 
-        // 3. Compare passwords
+        // Compare provided password with the stored hashed password.
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ error: 'Invalid email or password.' });
         }
 
-        // 4. Generate JWT
+        // Generate a JWT for the authenticated user.
         const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
-            expiresIn: '1d', // e.g., 1 day
+            expiresIn: '1d', // Token expires in 1 day.
         });
 
-        // 5. Return token
+        // Respond with the token and basic user information.
         return res.json({
             message: 'Logged in successfully',
             token,
@@ -98,50 +99,53 @@ exports.login = async (req, res) => {
 // ---------------------- GET PROFILE ----------------------
 exports.getProfile = async (req, res) => {
     try {
-        // By the time we get here, req.userId should be set by middleware
-        const user = await User.findById(req.userId).select('-password');
+        // Retrieve the user's profile using the userId set by authentication middleware.
+        const user = await User.findById(req.userId).select('-password'); // Exclude password from the result.
         if (!user) {
             return res.status(404).json({ error: 'User not found.' });
         }
+        // Respond with the user profile data.
         return res.json(user);
-        } catch (error) {
-            console.error('Get Profile Error:', error);
-            return res.status(500).json({ error: 'Server error' });
+    } catch (error) {
+        console.error('Get Profile Error:', error);
+        return res.status(500).json({ error: 'Server error' });
     }
 };
 
 // ---------------------- UPDATE PROFILE ----------------------
 exports.updateProfile = async (req, res) => {
     try {
+        // Destructure fields to update from the request body.
         const { firstName, lastName, dateOfBirth, password } = req.body;
 
-        // Find user
+        // Find the user by their ID.
         const user = await User.findById(req.userId);
         if (!user) {
             return res.status(404).json({ error: 'User not found.' });
         }
 
-        // Update fields if provided
+        // Update the user's fields if they are provided.
         if (firstName) user.firstName = firstName;
         if (lastName) user.lastName = lastName;
         if (dateOfBirth) user.dateOfBirth = dateOfBirth;
 
-        // If user wants to update password
+        // If a new password is provided, hash it and update the user's password.
         if (password) {
             const saltRounds = 10;
             user.password = await bcrypt.hash(password, saltRounds);
         }
 
+        // Save the updated user document.
         await user.save();
 
-        // Return updated info (excluding password)
+        // Retrieve the updated user information (excluding the password) and respond.
         const updatedUser = await User.findById(req.userId).select('-password');
         return res.json({
             message: 'Profile updated successfully',
             user: updatedUser,
         });
-        } catch (error) {
-            console.error('Update Profile Error:', error);
-            return res.status(500).json({ error: 'Server error' });
+    } catch (error) {
+        console.error('Update Profile Error:', error);
+        return res.status(500).json({ error: 'Server error' });
     }
 };
