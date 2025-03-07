@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>AroundU</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+    </head>
+    <body>
+    <header class="main-header">
+        <h1>User Profile</h1>
+    </header>
+    
+    <div class="layout-container" style="padding: 24px;">
+        <div class="profile-container">
+        <h2>Your Profile Details</h2>
+        <!-- Display current profile details -->
+        <div id="profile-details">
+            <!-- Profile info will be injected here -->
+        </div>
+        
+        <h3>Edit Profile</h3>
+        <!-- Form for updating profile details -->
+        <form id="profileForm" class="signup-form">
+            <div class="form-row">
+            <label>First Name</label>
+            <input type="text" name="firstName" id="firstName" required />
+            </div>
+            <div class="form-row">
+            <label>Last Name</label>
+            <input type="text" name="lastName" id="lastName" required />
+            </div>
+            <div class="form-row">
+            <label>Email</label>
+            <!-- Email is shown as read-only -->
+            <input type="email" name="email" id="email" disabled />
+            </div>
+            <div class="form-row">
+            <label>Date of Birth</label>
+            <input type="date" name="dateOfBirth" id="dateOfBirth" required />
+            </div>
+            <div class="form-row">
+            <label>New Password</label>
+            <!-- Leave blank if you don't want to change the password -->
+            <input type="password" name="password" id="password" placeholder="Leave blank to keep unchanged" />
+            </div>
+            <button type="submit">Update Profile</button>
+        </form>
+        </div>
+    </div>
+    
+    <!-- Include profile.js from the same folder -->
+    <script src="profile.js"></script>
+    </body>
+</html>
