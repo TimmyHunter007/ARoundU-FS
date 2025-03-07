@@ -141,42 +141,42 @@ function setupLoginModal() {
 function setupLoginForm() {
     const loginForm = document.getElementById('loginForm');
     loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData(loginForm);
-  
-        const data = {
-            email: formData.get('email'),
-            password: formData.get('password'),
-      };
-  
-      try {
-        const response = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-        });
-  
-        const result = await response.json();
-        if (!response.ok) {
-            alert(result.error || 'Error logging in');
-        } else {
-            alert('Login successful!');
+    e.preventDefault();
+    const formData = new FormData(loginForm);
 
-            if (result.token) {
-                localStorage.setItem('token', result.token);
-          }
+    const data = {
+        email: formData.get('email'),
+        password: formData.get('password'),
+    };
 
-          document.getElementById('login-modal').style.display = 'none';
-  
-          // Possibly redirect to a profile page or do something else
-          // window.location.href = '/profile.html';
+    try {
+    const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+        alert(result.error || 'Error logging in');
+    } else {
+        alert('Login successful!');
+
+        if (result.token) {
+        localStorage.setItem('token', result.token);
         }
-      } catch (err) {
+
+        document.getElementById('login-modal').style.display = 'none';
+
+        window.location.href = '/profile.html';
+    }
+    } catch (err) {
         console.error(err);
         alert('Server error');
-      }
+        }
     });
-  }
+}
+  
 
 document.addEventListener('DOMContentLoaded', () => {
     setupSignupModal();
