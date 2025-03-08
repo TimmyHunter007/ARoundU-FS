@@ -507,9 +507,9 @@ body {
   margin: 0 8px;
 }
 
-/* ================
+/* ======================================================================
    Dropdown Styles
-   ================ */
+   ====================================================================== */
    .dropdown {
     position: absolute;
     right: 0px;
@@ -545,11 +545,7 @@ body {
     overflow: hidden;
     right: 0; /* Align dropdown to the right edge if you like */
   }
-  
-  /* Show the dropdown on hover or click. 
-     If you want "click to open," use JS instead. 
-     For hover, do the following:
-  */
+
   .dropdown:hover .dropdown-content {
     display: block;
   }
