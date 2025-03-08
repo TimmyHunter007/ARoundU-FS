@@ -236,8 +236,6 @@ function setupLoginForm() {
                 // Alert the user if login fails.
                 alert(result.error || 'Error logging in');
             } else {
-                // Notify user of successful login.
-                alert('Login successful!');
                 // Save token to local storage if provided.
                 if (result.token) {
                     localStorage.setItem('token', result.token);
