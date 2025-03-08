@@ -14,62 +14,73 @@
         <!-- Main header section displaying the page title -->
         <header class="main-header">
             <h1>User Profile</h1>
-            <!-- Container for action buttons (Home and Logout) -->
-            <div class="profile-actions profile-buttons">
-                <!-- "Home" button to navigate back to the home page -->
-                <button id="homeBtn" class="home-button">Home</button>
-                <!-- "Logout" button to sign the user out -->
-                <button id="logoutBtn" class="logout-button">Logout</button>
+            <!-- Dropdown if user is NOT logged in -->
+            <div class="dropdown" id="authDropdown" style="display: none;">
+                <button class="dropbtn">Account</button>
+                <div class="dropdown-content">
+                    <button id="openSignupBtn">Sign Up</button>
+                    <button id="openLoginBtn">Log In</button>
+                </div>
+            </div>
+
+            <!-- Dropdown if user IS logged in -->
+            <div class="dropdown" id="profileDropdown" style="display: none;">
+                <button class="dropbtn">
+                    Welcome, <span id="welcomeName"></span>!
+                </button>
+                <div class="dropdown-content">
+                    <!-- A "Home" link for going back to index -->
+                    <button id="homeBtnDropdown">Home</button>
+                    <!-- Logout button -->
+                    <button id="logoutBtnDropdown">Logout</button>
+                </div>
             </div>
         </header>
         
         <!-- Main container for the profile page content -->
         <div class="profile-page-container">
-            <!-- Layout container for profile details and edit form, with padding for spacing -->
-            <div class="layout-container" style="padding: 24px; width: 1700px;">
-                <!-- Container holding both the read-only profile details and the edit form -->
-                <div class="profile-container">
-                    <!-- Section heading for displaying current profile details -->
-                    <h2>Your Profile Details</h2>
-                    <!-- Div where profile details will be dynamically injected by JavaScript -->
-                    <div id="profile-details">
-                        <!-- Profile info will be injected here -->
-                    </div>
-                    
-                    <!-- Section heading for the profile editing area -->
-                    <h3>Edit Profile</h3>
-                    <!-- Form for updating profile details -->
-                    <form id="profileForm" class="signup-form">
-                        <!-- Form row for First Name -->
-                        <div class="form-row">
-                            <label>First Name</label>
-                            <input type="text" name="firstName" id="firstName" required />
-                        </div>
-                        <!-- Form row for Last Name -->
-                        <div class="form-row">
-                            <label>Last Name</label>
-                            <input type="text" name="lastName" id="lastName" required />
-                        </div>
-                        <!-- Form row for Email (read-only) -->
-                        <div class="form-row">
-                            <label>Email</label>
-                            <input type="email" name="email" id="email" disabled />
-                        </div>
-                        <!-- Form row for Date of Birth -->
-                        <div class="form-row">
-                            <label>Date of Birth</label>
-                            <input type="date" name="dateOfBirth" id="dateOfBirth" required />
-                        </div>
-                        <!-- Form row for updating password (optional) -->
-                        <div class="form-row">
-                            <label>New Password</label>
-                            <!-- Placeholder instructs to leave blank if password change is not desired -->
-                            <input type="password" name="password" id="password" placeholder="Leave blank to keep unchanged" />
-                        </div>
-                        <!-- Submit button to trigger profile update -->
-                        <button type="submit">Update Profile</button>
-                    </form>
+            <!-- Container holding both the read-only profile details and the edit form -->
+            <div class="profile-container">
+                <!-- Section heading for displaying current profile details -->
+                <h2>Your Profile Details</h2>
+                <!-- Div where profile details will be dynamically injected by JavaScript -->
+                <div id="profile-details">
+                    <!-- Profile info will be injected here -->
                 </div>
+                
+                <!-- Section heading for the profile editing area -->
+                <h3>Edit Profile</h3>
+                <!-- Form for updating profile details -->
+                <form id="profileForm" class="signup-form">
+                    <!-- Form row for First Name -->
+                    <div class="form-row">
+                        <label>First Name</label>
+                        <input type="text" name="firstName" id="firstName" required />
+                    </div>
+                    <!-- Form row for Last Name -->
+                    <div class="form-row">
+                        <label>Last Name</label>
+                        <input type="text" name="lastName" id="lastName" required />
+                    </div>
+                    <!-- Form row for Email (read-only) -->
+                    <div class="form-row">
+                        <label>Email</label>
+                        <input type="email" name="email" id="email" disabled />
+                    </div>
+                    <!-- Form row for Date of Birth -->
+                    <div class="form-row">
+                        <label>Date of Birth</label>
+                        <input type="date" name="dateOfBirth" id="dateOfBirth" required />
+                    </div>
+                    <!-- Form row for updating password (optional) -->
+                    <div class="form-row">
+                        <label>New Password</label>
+                        <!-- Placeholder instructs to leave blank if password change is not desired -->
+                        <input type="password" name="password" id="password" placeholder="Leave blank to keep unchanged" />
+                    </div>
+                    <!-- Submit button to trigger profile update -->
+                    <button type="submit">Update Profile</button>
+                </form>
             </div>
         </div>
         

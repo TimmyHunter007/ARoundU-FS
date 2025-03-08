@@ -1,59 +1,91 @@
-// Wait until the entire DOM content has loaded before executing the code.
+// Wait until the DOM content has loaded before executing the code.
 document.addEventListener('DOMContentLoaded', () => {
-    // Retrieve the token from local storage.
+    // 1. Check login status to show/hide the correct dropdown.
+    checkUserStatus();
+
+    // 2. If a token exists, fetch the user profile.
     const token = localStorage.getItem('token');
     if (!token) {
-        // If no token is found, redirect the user to the home page to log in.
-        window.location.href = 'index.html';
+        // If no token, user is definitely not logged in, so do not fetch profile.
         return;
     }
-
-    // If a token exists, fetch and display the user's profile details.
     fetchProfile(token);
 
-    // Add an event listener to handle profile form submission for updating profile details.
+    // 3. Profile form submission for updating user details.
     document.getElementById('profileForm').addEventListener('submit', updateProfile);
 
-    // Add an event listener to the "Home" button to redirect to the home page.
-    document.getElementById('homeBtn').addEventListener('click', () => {
-        window.location.href = 'index.html';
-    });
-
-    // Add an event listener to the "Logout" button to remove the token and redirect to the home page.
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-        localStorage.removeItem('token');
-        window.location.href = 'index.html';
-    });
+    // 4. Home & Logout inside the "Profile" dropdown.
+    setupHomeAndLogoutDropdown();
 });
 
 /**
- * Fetch profile details using the provided token and display them on the page.
+ * Checks the user's login status by looking for a token and verifying with /api/auth/profile.
+ */
+function checkUserStatus() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        // No token => show "Account" dropdown
+        showLoginSignupDropdown();
+        return;
+    }
+
+    // If token exists, verify it by fetching the user's profile.
+    fetch('/api/auth/profile', {
+        headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            // Token invalid => show "Account" dropdown
+            showLoginSignupDropdown();
+        } else {
+            // Valid => show "Profile" dropdown
+            showProfileDropdown(data.firstName);
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        showLoginSignupDropdown();
+    });
+}
+
+/** Show the "authDropdown" for not-logged-in users */
+function showLoginSignupDropdown() {
+    document.getElementById('authDropdown').style.display = 'inline-block';
+    document.getElementById('profileDropdown').style.display = 'none';
+}
+
+/** Show the "profileDropdown" for logged-in users and set welcome name */
+function showProfileDropdown(firstName) {
+    document.getElementById('authDropdown').style.display = 'none';
+    document.getElementById('profileDropdown').style.display = 'inline-block';
+    document.getElementById('welcomeName').textContent = firstName;
+}
+
+/**
+ * Fetches the user profile details if a valid token exists.
  */
 function fetchProfile(token) {
     fetch('/api/auth/profile', {
         method: 'GET',
         headers: {
-            // Send the token as a Bearer token in the Authorization header.
             Authorization: `Bearer ${token}`
         }
     })
     .then(res => res.json())
     .then(data => {
         if (data.error) {
-            // If an error occurs (e.g., token expired), alert the user and redirect to home.
+            // If token invalid, go back to home (or show "Account" dropdown).
             alert(data.error);
             window.location.href = 'index.html';
             return;
         }
-        // Display profile details in a read-only format.
+        // Display the profile details in read-only format
         displayProfileDetails(data);
-
-        // Populate the profile form fields with the fetched data.
+        // Populate form fields
         document.getElementById('firstName').value = data.firstName;
         document.getElementById('lastName').value = data.lastName;
         document.getElementById('email').value = data.email;
-
-        // Format the date of birth into YYYY-MM-DD format for the date input.
         const dob = new Date(data.dateOfBirth);
         const month = String(dob.getMonth() + 1).padStart(2, '0');
         const day = String(dob.getDate()).padStart(2, '0');
@@ -61,18 +93,16 @@ function fetchProfile(token) {
         document.getElementById('dateOfBirth').value = `${year}-${month}-${day}`;
     })
     .catch(err => {
-        // Log any error and alert the user if profile fetching fails.
         console.error(err);
         alert('Error fetching profile');
     });
 }
 
 /**
- * Display profile details in the "Your Profile Details" area.
+ * Displays the user's current profile info in the #profile-details div.
  */
 function displayProfileDetails(user) {
     const detailsDiv = document.getElementById('profile-details');
-    // Create HTML content for profile details.
     detailsDiv.innerHTML = `
         <p><strong>First Name:</strong> ${user.firstName}</p>
         <p><strong>Last Name:</strong> ${user.lastName}</p>
@@ -82,34 +112,27 @@ function displayProfileDetails(user) {
 }
 
 /**
- * Handle updating the user profile when the profile form is submitted.
+ * Handles the profile update form submission.
  */
 function updateProfile(e) {
-    // Prevent the default form submission behavior.
     e.preventDefault();
-    // Retrieve the token from local storage.
     const token = localStorage.getItem('token');
     if (!token) return;
 
-    // Get the updated input values from the form fields.
     const firstName = document.getElementById('firstName').value.trim();
     const lastName = document.getElementById('lastName').value.trim();
     const dateOfBirth = document.getElementById('dateOfBirth').value;
     const password = document.getElementById('password').value.trim();
 
-    // Build the updated data object with the profile details.
     const updatedData = { firstName, lastName, dateOfBirth };
-    // If a new password is provided, include it in the update.
     if (password) {
         updatedData.password = password;
     }
 
-    // Send a PUT request to update the profile.
     fetch('/api/auth/profile', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            // Include the token in the Authorization header.
             Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(updatedData)
@@ -117,20 +140,32 @@ function updateProfile(e) {
     .then(res => res.json())
     .then(result => {
         if (result.error) {
-            // Alert the user if an error occurred during the update.
             alert(result.error);
         } else {
-            // Notify the user that the profile was updated successfully.
             alert(result.message || 'Profile updated!');
-            // Refresh the displayed profile details with updated data.
+            // Refresh read-only details
             displayProfileDetails(result.user);
-            // Clear the password field after update.
+            // Clear password field
             document.getElementById('password').value = '';
         }
     })
     .catch(err => {
-        // Log any errors and alert the user if the update fails.
         console.error(err);
         alert('Error updating profile');
+    });
+}
+
+/**
+ * Sets up the "Home" and "Logout" buttons inside the Profile dropdown.
+ */
+function setupHomeAndLogoutDropdown() {
+    // "Home" button → go to index.html
+    document.getElementById('homeBtnDropdown').addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+    // "Logout" button → remove token, redirect to home
+    document.getElementById('logoutBtnDropdown').addEventListener('click', () => {
+        localStorage.removeItem('token');
+        window.location.href = 'index.html';
     });
 }

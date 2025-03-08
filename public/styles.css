@@ -479,10 +479,11 @@ body {
    ====================================================================== */
 
 .profile-page-container {
-  max-width: 1700px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  min-height: 80vh; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  background-color: #f4f4f4; 
 }
 
 .profile-actions {
@@ -490,11 +491,11 @@ body {
 }
 
 .profile-container {
-  display: inline-block;
-  text-align: left;
   background-color: #fff;
-  padding: 1.5rem;
+  padding: 2rem;
   border-radius: 10px;
+  max-width: 500px;
+  width: 100%; /* Ensures it shrinks on mobile */
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
