@@ -458,7 +458,7 @@ body {
 
 .ticket-button {
   position: absolute;
-  top: 15px;
+  top: 17px;
   background-color: var(--secondary-color);
   color: white;
   border: none;
