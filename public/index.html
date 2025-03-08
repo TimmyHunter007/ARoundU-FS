@@ -11,6 +11,16 @@
         <link rel="icon" type="image/x-icon" href="favicon.ico">
     </head>
     <body>
+        <!-- Include custom JavaScript file that handles map initialization, events, and modals -->
+        <script src="scripts.js"></script>
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJRa9QY6RF9ooPsZ1OpVNmMO6enp4mnqA
+                &v=beta
+                &libraries=marker
+                &callback=initMap"
+                async
+            defer>
+        </script>
 
         <!-- Header section containing the title and authentication buttons -->
         <header class="main-header">
@@ -206,8 +216,5 @@
 
         <!-- Load the Google Maps API script with required key, libraries, and callback -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJRa9QY6RF9ooPsZ1OpVNmMO6enp4mnqA&libraries=marker&callback=initMap&mapIds=5c290e9e653ba24a" async defer></script>
-
-        <!-- Include custom JavaScript file that handles map initialization, events, and modals -->
-        <script src="scripts.js"></script>
     </body>
 </html>

@@ -494,3 +494,6 @@ function openModal(event) {
         }
     };
 }
+
+// Make sure initMap is attached to the window object:
+window.initMap = initMap;
