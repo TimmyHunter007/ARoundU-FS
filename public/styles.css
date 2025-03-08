@@ -313,11 +313,11 @@ body {
 }
 
 /* ======================================================================
-   Sign Up & Login Button Styles
+   Sign Up, Login, Profile, & Home Button Styles
    ====================================================================== */
 
 /* Sign Up Button (in Header) */
-.signup-button {
+.signup-button, .profile-button, .home-button {
   position: absolute;
   right: 0px;
   top: 60%;
@@ -332,12 +332,12 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.signup-button:hover {
+.signup-button:hover, .profile-button:hover, .home-button:hover {
   background-color: var(--hover-color);
 }
 
 /* Login Button (in Header) */
-.login-button {
+.login-button, .logout-button {
   position: absolute;
   right: 130px; /* Positioned near the sign-up button */
   top: 75%;
@@ -352,7 +352,7 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.login-button:hover {
+.login-button:hover, .logout-button:hover {
   background-color: var(--hover-color);
 }
 
@@ -479,7 +479,7 @@ body {
    ====================================================================== */
 
 .profile-page-container {
-  max-width: 700px;
+  max-width: 1700px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
