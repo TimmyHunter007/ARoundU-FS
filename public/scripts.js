@@ -1,7 +1,7 @@
 // Global variables for storing the map instance, user coordinates, and markers.
-let map; // Holds the Google Map instance.
-let userLat; // Stores the user's latitude.
-let userLng; // Stores the user's longitude.
+let map;       // Holds the Google Map instance.
+let userLat;   // Stores the user's latitude.
+let userLng;   // Stores the user's longitude.
 
 // Array to store all active markers on the map.
 let markers = []; // Will contain all marker objects currently displayed on the map.
@@ -61,7 +61,7 @@ function initMap() {
 
 /**
  * Checks the user's login status by looking for a token in local storage and fetching the user profile.
- * Displays the appropriate header buttons based on login status.
+ * Displays the appropriate dropdowns based on login status.
  */
 function checkUserStatus() {
     const token = localStorage.getItem('token'); // Retrieve token from local storage.
@@ -73,40 +73,43 @@ function checkUserStatus() {
         .then(res => res.json())
         .then(data => {
             if (data.error) {
-                // If token is invalid or expired, show login/signup buttons.
-                showLoginSignupButtons();
+                // If token is invalid or expired, show "Account" dropdown.
+                showLoginSignupDropdown();
             } else {
-                // If token is valid, show a welcome message with the user's first name.
-                showWelcomeUser(data.firstName);
+                // If token is valid, show the "Profile" dropdown with the user's first name.
+                showProfileDropdown(data.firstName);
             }
         })
         .catch(err => {
             console.error(err);
-            // On error, fallback to showing the login/signup buttons.
-            showLoginSignupButtons();
+            // On error, fallback to showing the login/signup dropdown.
+            showLoginSignupDropdown();
         });
     } else {
-        // If no token is found, display the login/signup buttons.
-        showLoginSignupButtons();
+        // If no token is found, display the login/signup dropdown.
+        showLoginSignupDropdown();
     }
 }
 
 /**
- * Displays "Sign Up" and "Log In" buttons and hides the welcome message container.
+ * Displays the "Account" dropdown (for Sign Up / Log In) and hides the "Profile" dropdown.
  */
-function showLoginSignupButtons() {
-    document.getElementById('openSignupBtn').style.display = 'inline-block';
-    document.getElementById('openLoginBtn').style.display = 'inline-block';
-    document.getElementById('welcomeContainer').style.display = 'none';
+function showLoginSignupDropdown() {
+    // Show the "authDropdown" for not-logged-in state.
+    document.getElementById('authDropdown').style.display = 'inline-block';
+    // Hide the "profileDropdown."
+    document.getElementById('profileDropdown').style.display = 'none';
 }
 
 /**
- * Displays a welcome message with the user's first name and hides the login/signup buttons.
+ * Displays the "Profile" dropdown (Profile / Logout) and hides the "Account" dropdown.
  */
-function showWelcomeUser(firstName) {
-    document.getElementById('openSignupBtn').style.display = 'none';
-    document.getElementById('openLoginBtn').style.display = 'none';
-    document.getElementById('welcomeContainer').style.display = 'inline-block';
+function showProfileDropdown(firstName) {
+    // Hide the "authDropdown."
+    document.getElementById('authDropdown').style.display = 'none';
+    // Show the "profileDropdown."
+    document.getElementById('profileDropdown').style.display = 'inline-block';
+    // Insert the user’s first name in the welcome text.
     document.getElementById('welcomeName').textContent = firstName;
 }
 
@@ -241,7 +244,7 @@ function setupLoginForm() {
                 }
                 // Close the login modal.
                 document.getElementById('login-modal').style.display = 'none';
-                // Redirect the user to the profile page.
+                // Redirect the user to the profile page (or refresh, as needed).
                 window.location.href = '/profile.html';
             }
         } catch (err) {
@@ -276,7 +279,7 @@ function setupLogoutFromIndex() {
 
 // Wait for the document to load before running setup functions.
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Check user's login status to show/hide header buttons.
+    // 1. Check user's login status to show the correct dropdown.
     checkUserStatus();
 
     // 2. Initialize modals and forms for signup and login.
@@ -495,5 +498,5 @@ function openModal(event) {
     };
 }
 
-// Make sure initMap is attached to the window object:
+// Attach initMap to the window so Google Maps can call it.
 window.initMap = initMap;

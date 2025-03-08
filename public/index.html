@@ -18,19 +18,31 @@
             <h1>AroundU<br>
                 <div class="sub-h1">Find Events Near You</div>
             </h1>
-            <!-- Button to open the Sign Up modal -->
-            <button id="openSignupBtn" class="signup-button">Sign Up</button>
-            <!-- Button to open the Log In modal -->
-            <button id="openLoginBtn" class="login-button">Log In</button>
-            
+
+            <!-- Dropdown if user is NOT logged in -->
+            <div class="dropdown" id="authDropdown" style="display: none;">
+                <button class="dropbtn">Account</button>
+                <div class="dropdown-content">
+                    <!-- Button to open the Sign Up modal -->
+                    <button id="openSignupBtn">Sign Up</button>
+                    <!-- Button to open the Log In modal -->
+                    <button id="openLoginBtn">Log In</button>
+                </div>
+            </div>
+
+            <!-- Dropdown if user IS logged in -->
             <!-- Container to display welcome message after login; hidden by default -->
-            <span id="welcomeContainer" style="display: none;">
-                Welcome, <span id="welcomeName"></span>!
-                <!-- Button to navigate to the Profile page -->
-                <button id="profileBtn" class="profile-button">Profile</button>
-                <!-- Button to logout from the current session -->
-                <button id="logoutBtnIndex" class="logout-button">Logout</button>
-            </span>
+            <div class="dropdown" id="profileDropdown" style="display: none;">
+                <button class="dropbtn">
+                    Welcome, <span id="welcomeName"></span>!
+                </button>
+                <div class="dropdown-content">
+                    <!-- Button to navigate to the Profile page -->
+                    <button id="profileBtn">Profile</button>
+                    <!-- Button to logout from the current session -->
+                    <button id="logoutBtnIndex">Logout</button>
+                </div>
+            </div>
         </header>
 
         <!-- Main Layout Container wrapping the search, filter, map, and events sections -->
