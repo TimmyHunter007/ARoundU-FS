@@ -93,6 +93,8 @@ const getEvents = async (req, res) => {
                 venuename: event._embedded.venues[0].name || 'Vanue not available',
                 // Get events Ticketmaster ID
                 id: event.id,
+                // Use provided image or a fallback message if not available
+                imageurl: event.image[1].url || 'Image not available',
             }));
         }
 
