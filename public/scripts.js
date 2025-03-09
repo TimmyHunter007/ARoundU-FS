@@ -477,6 +477,9 @@ function openModal(event) {
         <p>${event.description}</p>
         <h3>Location</h3>
         <p>${event.venuename}<br>${event.address} ${event.city}, ${event.stateCode} ${event.postalcode}</p>
+        <hr>
+        <h3>TESTING AREA | WILL BE REMOVED</h3>
+        <p>Ticketmaster Event ID: ${event.id}</p>
     `;
     
     // Display the modal.

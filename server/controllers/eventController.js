@@ -91,6 +91,8 @@ const getEvents = async (req, res) => {
                 tmurl: event.url || 'Link not available',
                 // Use provided venue name or a fallback message if not available.
                 venuename: event._embedded.venues[0].name || 'Vanue not available',
+                // Get events Ticketmaster ID
+                id: event.id,
             }));
         }
 
