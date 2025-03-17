@@ -7,6 +7,36 @@ let userLng;   // Stores the user's longitude.
 let markers = []; // Will contain all marker objects currently displayed on the map.
 
 /**
+ * Dynamically loads the Google Maps script and initializes the map.
+ * @param {string} apiKey - Your Google Maps API key.
+ * @returns {Promise} - Resolves when the script is loaded.
+ */
+function loadGoogleMaps(apiKey) {
+    return new Promise((resolve, reject) => {
+        // Check if the script is already loaded
+        if (document.querySelector(`script[src*="maps.googleapis.com"]`)) {
+            resolve(); // Script is already loaded
+            return;
+        }
+
+        // Create the script element
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
+        script.async = true;
+        script.defer = true;
+
+        // Resolve the promise when the script loads
+        script.onload = resolve;
+
+        // Reject the promise if the script fails to load
+        script.onerror = () => reject(new Error('Failed to load Google Maps script'));
+
+        // Append the script to the document head
+        document.head.appendChild(script);
+    });
+}
+
+/**
  * Initializes the Google Map, gets the user's location, and sets up event listeners.
  */
 function initMap() {
@@ -291,6 +321,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Update and display the current date/time based on user's time zone.
     updateDateTime();
+
+    // 5. Lazy load Google Maps and initialize the map
+    const GOOGLE_MAPS_API_KEY = 'AIzaSyDJRa9QY6RF9ooPsZ1OpVNmMO6enp4mnqA'; // Replace with your API key
+    loadGoogleMaps(GOOGLE_MAPS_API_KEY)
+        .then(() => {
+            console.log('Google Maps script loaded successfully');
+            initMap(); // Initialize the map after the script is loaded
+        })
+        .catch((error) => {
+            console.error('Error loading Google Maps:', error);
+        });
 });
 
 /**
