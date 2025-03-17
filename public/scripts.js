@@ -412,6 +412,10 @@ function formatDateTime(dateStr, timeStr) {
  */
 function fetchEvents(latitude, longitude, radius, filters = {}) {
     const eventsContainer = document.getElementById("events-container");
+    const loadingSpinner = document.getElementById("loading-spinner");
+
+    // Show the loading spinner
+    loadingSpinner.style.display = "block";
     eventsContainer.innerHTML = ""; // Clear previous event cards.
 
     // Remove any existing markers from the map.
@@ -435,60 +439,64 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
 
     // Fetch events from the API.
     fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-          if (data.events && Array.isArray(data.events) && data.events.length > 0) {
-              const bounds = new google.maps.LatLngBounds();
-              data.events.forEach((event) => {
-                  // Create a new marker for each event.
-                  const position = new google.maps.LatLng(event.latitude, event.longitude);
-                  const marker = new google.maps.marker.AdvancedMarkerElement({
-                      position,
-                      map,
-                      title: event.name,
-                  });
-                  markers.push(marker);
-                  // Extend map bounds to include the marker's position.
-                  bounds.extend(position);
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.events && Array.isArray(data.events) && data.events.length > 0) {
+                const bounds = new google.maps.LatLngBounds();
+                data.events.forEach((event) => {
+                    // Create a new marker for each event.
+                    const position = new google.maps.LatLng(event.latitude, event.longitude);
+                    const marker = new google.maps.marker.AdvancedMarkerElement({
+                        position,
+                        map,
+                        title: event.name,
+                    });
+                    markers.push(marker);
+                    // Extend map bounds to include the marker's position.
+                    bounds.extend(position);
 
-                  // Create a card element to display event details.
-                  const eventCard = document.createElement("div");
-                  eventCard.className = "card";
+                    // Create a card element to display event details.
+                    const eventCard = document.createElement("div");
+                    eventCard.className = "card";
 
-                  // Set up the content of the event card.
-                  const cardContent = document.createElement("div");
-                  cardContent.className = "card-content";
-                  cardContent.innerHTML = `
-                      <h3>${event.name}</h3>
-                      <hr>
-                      <h4>Time of Event: ${formatDateTime(event.date, event.time)}</h4>
-                      <p>${event.description}</p>
-                      <p>Location: ${event.address} ${event.city}, ${event.stateCode} - ${event.postalcode}</p>
-                  `;
-                  // Create a "Read More" button to open a detailed modal.
-                  const readMoreButton = document.createElement("button");
-                  readMoreButton.className = "read-more-btn";
-                  readMoreButton.innerText = "Read More";
-                  readMoreButton.addEventListener("click", () => {
-                      openModal(event);
-                  });
+                    // Set up the content of the event card.
+                    const cardContent = document.createElement("div");
+                    cardContent.className = "card-content";
+                    cardContent.innerHTML = `
+                        <h3>${event.name}</h3>
+                        <hr>
+                        <h4>Time of Event: ${formatDateTime(event.date, event.time)}</h4>
+                        <p>${event.description}</p>
+                        <p>Location: ${event.address} ${event.city}, ${event.stateCode} - ${event.postalcode}</p>
+                    `;
+                    // Create a "Read More" button to open a detailed modal.
+                    const readMoreButton = document.createElement("button");
+                    readMoreButton.className = "read-more-btn";
+                    readMoreButton.innerText = "Read More";
+                    readMoreButton.addEventListener("click", () => {
+                        openModal(event);
+                    });
 
-                  // Append the content and button to the event card.
-                  eventCard.appendChild(cardContent);
-                  eventCard.appendChild(readMoreButton);
-                  eventsContainer.appendChild(eventCard);
-              });
-              // Adjust the map view to include all markers.
-              map.fitBounds(bounds);
-          } else {
-              // Inform the user if no events were found.
-              eventsContainer.innerHTML = "<p>No events found in the selected area.</p>";
-          }
-      })
-      .catch((error) => {
-          console.error("Error fetching events:", error);
-          alert("Unable to fetch events. Please try again.");
-      });
+                    // Append the content and button to the event card.
+                    eventCard.appendChild(cardContent);
+                    eventCard.appendChild(readMoreButton);
+                    eventsContainer.appendChild(eventCard);
+                });
+                // Adjust the map view to include all markers.
+                map.fitBounds(bounds);
+            } else {
+                // Inform the user if no events were found.
+                eventsContainer.innerHTML = "<p>No events found in the selected area.</p>";
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching events:", error);
+            alert("Unable to fetch events. Please try again.");
+        })
+        .finally(() => {
+            // Hide the loading spinner
+            loadingSpinner.style.display = "none";
+        });
 }
 
 /**
