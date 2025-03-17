@@ -51,10 +51,10 @@ body {
 
 .layout-container {
   display: grid;
-  grid-template-columns: 270px 270px 1fr;
+  grid-template-columns: 270px 1fr;
   grid-template-areas:
-    "search filter map"
-    "events events events";
+    "search map"
+    "events events";
   gap: 24px;
   padding: 24px;
   max-width: 1700px;
