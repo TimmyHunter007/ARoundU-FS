@@ -41,52 +41,97 @@ function loadGoogleMaps(apiKey) {
  */
 function initMap() {
     // Get the user's current position using the Geolocation API.
-    navigator.geolocation.getCurrentPosition((position) => {
-        // Store the user's latitude and longitude from the position object.
-        userLat = position.coords.latitude;
-        userLng = position.coords.longitude;
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            // Store the user's latitude and longitude from the position object.
+            userLat = position.coords.latitude;
+            userLng = position.coords.longitude;
 
-        // Create a coordinate object for the map's center.
-        const defaultCenter = { lat: userLat, lng: userLng };
+            // Create a coordinate object for the map's center.
+            const defaultCenter = { lat: userLat, lng: userLng };
 
-        // Instantiate the Google Map centered on the user's current location.
-        map = new google.maps.Map(document.getElementById("map"), {
-            center: defaultCenter,
-            zoom: 10, // Default zoom level.
-            mapId: "5c290e9e653ba24a", // Identifier for a custom styled map.
-        });
-
-        // Initially fetch events within a 10-mile radius using the user's location.
-        fetchEvents(userLat, userLng, 10, {});
-
-        // Set up event listener for the search button to apply custom filters.
-        document.getElementById("searchBtn").addEventListener("click", () => {
-            // Parse the search radius, defaulting to 10 if input is invalid.
-            let radius = parseFloat(document.getElementById("radius").value) || 10;
-            // Ensure the radius is between 0 and 300.
-            radius = Math.max(0, Math.min(radius, 300));
-
-            // Retrieve date and time filter inputs.
-            const rawStartDate = document.getElementById("single-date")?.value.trim() || "";
-            const startTime = document.getElementById("startTime")?.value || "";
-            // Use the start date as default end date if not provided.
-            const rawEndDate = document.getElementById("end-date")?.value.trim() || rawStartDate;
-            // Default end time is set to the last second of the day.
-            const endTime = document.getElementById("endTime")?.value || "23:59:59";
-
-            // Retrieve the event type filter from the input.
-            const eventType = document.getElementById("event-type")?.value || "";
-
-            // Call fetchEvents with all the provided filters.
-            fetchEvents(userLat, userLng, radius, {
-                startDate: rawStartDate,
-                startTime,
-                endDate: rawEndDate,
-                endTime,
-                eventType
+            // Instantiate the Google Map centered on the user's current location.
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: defaultCenter,
+                zoom: 10, // Default zoom level.
+                mapId: "5c290e9e653ba24a", // Identifier for a custom styled map.
             });
-        });
-    });
+
+            // Initially fetch events within a 10-mile radius using the user's location.
+            fetchEvents(userLat, userLng, 10, {});
+
+            // Set up event listener for the search button to apply custom filters.
+            document.getElementById("searchBtn").addEventListener("click", () => {
+                // Parse the search radius, defaulting to 10 if input is invalid.
+                let radius = parseFloat(document.getElementById("radius").value) || 10;
+                // Ensure the radius is between 0 and 300.
+                radius = Math.max(0, Math.min(radius, 300));
+
+                // Retrieve date and time filter inputs.
+                const rawStartDate = document.getElementById("single-date")?.value.trim() || "";
+                const startTime = document.getElementById("startTime")?.value || "";
+                // Use the start date as default end date if not provided.
+                const rawEndDate = document.getElementById("end-date")?.value.trim() || rawStartDate;
+                // Default end time is set to the last second of the day.
+                const endTime = document.getElementById("endTime")?.value || "23:59:59";
+
+                // Retrieve the event type filter from the input.
+                const eventType = document.getElementById("event-type")?.value || "";
+
+                // Call fetchEvents with all the provided filters.
+                fetchEvents(userLat, userLng, radius, {
+                    startDate: rawStartDate,
+                    startTime,
+                    endDate: rawEndDate,
+                    endTime,
+                    eventType,
+                });
+            });
+        },
+        (error) => {
+            // Handle location errors
+            handleLocationError(error);
+        }
+    );
+}
+
+/**
+ * Handles location errors and displays a message to the user.
+ * @param {Object} error - The error object from the Geolocation API.
+ */
+function handleLocationError(error) {
+    const errorMessageContainer = document.getElementById("location-error-message");
+
+    // Display a user-friendly message based on the error code
+    switch (error.code) {
+        case error.PERMISSION_DENIED:
+            errorMessageContainer.innerHTML = `
+                <p>Location access is required for this app to work. Please enable location services in your browser settings.</p>
+                <p><strong>How to enable location:</strong></p>
+                <ul>
+                    <li>Check your browser's location settings and allow access.</li>
+                    <li>Reload the page after enabling location services.</li>
+                </ul>
+            `;
+            break;
+        case error.POSITION_UNAVAILABLE:
+            errorMessageContainer.innerHTML = `
+                <p>We couldn't determine your location. Please check your device's location settings and try again.</p>
+            `;
+            break;
+        case error.TIMEOUT:
+            errorMessageContainer.innerHTML = `
+                <p>Location request timed out. Please try again.</p>
+            `;
+            break;
+        default:
+            errorMessageContainer.innerHTML = `
+                <p>An unknown error occurred while trying to access your location. Please try again later.</p>
+            `;
+    }
+
+    // Make the error message container visible
+    errorMessageContainer.style.display = "block";
 }
 
 /**
