@@ -107,11 +107,16 @@ function handleLocationError(error) {
         case error.PERMISSION_DENIED:
             errorMessageContainer.innerHTML = `
                 <p>Location access is required for this app to work. Please enable location services in your browser settings.</p>
-                <p><strong>How to enable location:</strong></p>
-                <ul>
-                    <li>Check your browser's location settings and allow access.</li>
-                    <li>Reload the page after enabling location services.</li>
-                </ul>
+                <p>
+                    <strong>How to enable location:</strong><br>
+                        Check your browser's location settings and allow access.<br>
+                        Reload the page after enabling location services.
+                        <hr>
+                        <a href='https://support.microsoft.com/en-us/microsoft-edge/location-and-privacy-in-microsoft-edge-31b5d154-0b1b-90ef-e389-7c7d4ffe7b04#:~:text=Visit%20a%20website%20in%20Microsoft,or%20Block%20from%20the%20list.' target='_blank'>Microsoft Edge</a> | 
+                        <a href='https://support.google.com/chrome/answer/142065?hl=en&co=GENIE.Platform%3DAndroid' target='_blank'>Chrome</a> | 
+                        <a href='https://support.apple.com/guide/mac-help/allow-apps-to-see-the-location-of-your-mac-mh35873/mac' target='_blank'>Safari</a> | 
+                        <a href='https://support.mozilla.org/en-US/kb/does-firefox-share-my-location-websites' target='_blank'>Firefox</a><br>
+                </p>
             `;
             break;
         case error.POSITION_UNAVAILABLE:
