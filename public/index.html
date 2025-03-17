@@ -60,25 +60,6 @@
                     <!-- Input field for search radius (in miles) -->
                     <label for="radius">Miles</label>
                     <input id="radius" type="number" placeholder="10" />
-                    <br><br>
-                    <!-- Button to trigger the search functionality -->
-                    <button id="searchBtn">Search</button>
-                    <!-- Element to display the current date/time -->
-                    <p id="current-time">. . .</p>
-                </div>
-            </div>
-
-            <!-- Filter Panel for additional search filters -->
-            <div class="filter-panel">
-                <h2>Filter</h2>
-                <div class="filter-fields">
-                    <!-- Section for filtering by event date -->
-                    <div class="filter-section">
-                        <h3>Event Date</h3>
-                        <!-- Input field for the event date with a pattern for the format -->
-                        <input type="date" id="single-date" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD"/>
-                    </div>
-
                     <!-- Section for filtering by event type -->
                     <div class="filter-section">
                         <h3>Event Type</h3>
@@ -94,50 +75,12 @@
                             <option value="comedy">Comedy</option>
                         </select>
                     </div>
-
-                    <!-- Section for filtering by start time of the event -->
-                    <div class="filter-section">
-                        <h3>Start time of Event</h3>
-                        <!-- Dropdown select for event start times -->
-                        <select id="startTime">
-                            <option value="">Any Time</option>
-                            <option value="T00:00:00Z">12:00 AM</option>
-                            <option value="T01:00:00Z">1:00 AM</option>
-                            <option value="T02:00:00Z">2:00 AM</option>
-                            <option value="T03:00:00Z">3:00 AM</option>
-                            <option value="T04:00:00Z">4:00 AM</option>
-                            <option value="T05:00:00Z">5:00 AM</option>
-                            <option value="T06:00:00Z">6:00 AM</option>
-                            <option value="T07:00:00Z">7:00 AM</option>
-                            <option value="T08:00:00Z">8:00 AM</option>
-                            <option value="T09:00:00Z">9:00 AM</option>
-                            <option value="T10:00:00Z">10:00 AM</option>
-                            <option value="T11:00:00Z">11:00 AM</option>
-                            <option value="T12:00:00Z">12:00 PM</option>
-                            <option value="T13:00:00Z">1:00 PM</option>
-                            <option value="T14:00:00Z">2:00 PM</option>
-                            <option value="T15:00:00Z">3:00 PM</option>
-                            <option value="T16:00:00Z">4:00 PM</option>
-                            <option value="T17:00:00Z">5:00 PM</option>
-                            <option value="T18:00:00Z">6:00 PM</option>
-                            <option value="T19:00:00Z">7:00 PM</option>
-                            <option value="T20:00:00Z">8:00 PM</option>
-                            <option value="T21:00:00Z">9:00 PM</option>
-                            <option value="T22:00:00Z">10:00 PM</option>
-                            <option value="T23:00:00Z">11:00 PM</option>
-                        </select>
-                        <!-- 
-                        Commented-out section for an "End Time" filter. This could be enabled in the future if needed.
-                        <label>End Time</label>
-                        <select id="endTime">
-                            <option value="T23:59:59Z">Any Time</option>
-                            <option value="T00:00:00Z">12:00 AM</option>
-                            <option value="T01:00:00Z">1:00 AM</option>
-                            ... more time options ...
-                        </select>
-                        -->
-                    </div>
-                </div><!-- End of filter-fields -->
+                    <br><br>
+                    <!-- Button to trigger the search functionality -->
+                    <button id="searchBtn">Search</button>
+                    <!-- Element to display the current date/time -->
+                    <p id="current-time">. . .</p>
+                </div>
             </div>
 
             <!-- Map Container -->
