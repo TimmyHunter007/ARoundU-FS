@@ -27,6 +27,7 @@ body {
    Header Styles
    ====================================================================== */
 
+/* Header Styles */
 .main-header {
   position: relative;
   text-align: center;
@@ -34,6 +35,28 @@ body {
   color: white;
   padding: 25px 0;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-logo {
+  width: 150px; /* Adjust the size of the image */
+  height: 150px; /* Adjust the size of the image */
+  margin-right: 10px; /* Add spacing between the image and the title */
+}
+
+.title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .main-header h1 {
@@ -43,14 +66,6 @@ body {
 
 .sub-h1 {
   font-size: 20px;
-}
-
-.header-logo {
-  position: absolute;
-  width: 150px; 
-  height: 150px; 
-  margin-right: 10px; 
-  vertical-align: middle; 
 }
 
 /* ======================================================================

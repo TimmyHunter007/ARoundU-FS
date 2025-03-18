@@ -11,18 +11,21 @@
         <link rel="icon" type="image/x-icon" href="favicon.ico">
     </head>
     <body>
-        <!-- Clickable image that redirects to the home page -->
-        <a href="index.html">
-            <img src="timmy_wimmy.png" alt="AroundU Logo" class="header-logo" />
-        </a>
-
-        <!-- Header section containing the title and authentication buttons -->
         <header class="main-header">
-            <!-- Main title with a subheading -->
-            <h1>AroundU<br>
-                <div class="sub-h1">Find Events Near You</div>
-            </h1>
-
+            <div class="header-content">
+                <!-- Clickable image that redirects to the home page -->
+                <a href="index.html">
+                    <img src="timmy_wimmy.png" alt="AroundU Logo" class="header-logo" />
+                </a>
+        
+                <!-- Main title with a subheading -->
+                <div class="title-container">
+                    <h1>AroundU<br>
+                        <div class="sub-h1">Find Events Near You</div>
+                    </h1>
+                </div>
+            </div>
+        
             <!-- Dropdown if user is NOT logged in -->
             <div class="dropdown" id="authDropdown" style="display: none;">
                 <button class="dropbtn">Account</button>
@@ -33,17 +36,14 @@
                     <button id="openLoginBtn">Log In</button>
                 </div>
             </div>
-
+        
             <!-- Dropdown if user IS logged in -->
-            <!-- Container to display welcome message after login; hidden by default -->
             <div class="dropdown" id="profileDropdown" style="display: none;">
                 <button class="dropbtn">
                     Welcome, <span id="welcomeName"></span>!
                 </button>
                 <div class="dropdown-content">
-                    <!-- Button to navigate to the Profile page -->
                     <button id="profileBtn">Profile</button>
-                    <!-- Button to logout from the current session -->
                     <button id="logoutBtnIndex">Logout</button>
                 </div>
             </div>
