@@ -46,10 +46,11 @@ body {
 }
 
 .header-logo {
-  width: 50px; /* Adjust the size of the image */
-  height: 50px; /* Adjust the size of the image */
-  margin-right: 10px; /* Add spacing between the image and the title */
-  vertical-align: middle; /* Align the image with the text */
+  position: absolute;
+  width: 150px; 
+  height: 150px; 
+  margin-right: 10px; 
+  vertical-align: middle; 
 }
 
 /* ======================================================================
