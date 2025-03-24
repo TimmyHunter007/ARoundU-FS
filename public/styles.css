@@ -15,12 +15,12 @@ body {
 
 /* CSS Variables for Colors and Common Values */
 :root {
-  --primary-color: #b85c30; /* Dark Burnt Orange */
-  --secondary-color: #1b4d4d; /* Dark Teal */
+  --primary-color: #0072B2; /* Blue - offers good contrast and is color-blind friendly */
+  --secondary-color: #E69F00; /* Orange - highly distinguishable alongside blue */
   --background-light: #ffffff;
   --text-color: #333;
   --border-color: #ddd;
-  --hover-color: #964b29; /* Slightly darker burnt orange for hover */
+  --hover-color: #005F8C; /* A darker shade of the primary blue for hover effects */
 }
 
 /* ======================================================================
