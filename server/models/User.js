@@ -27,6 +27,21 @@ const userSchema = new mongoose.Schema(
             type: Date,
             required: true,
         },
+        savedEvents: [
+            {
+              eventId: { type: String, required: true },
+              name: { type: String },
+              date: { type: Date },
+              time: { type: String },
+              description: { type: String },
+              address: { type: String },
+              city: { type: String },
+              stateCode: { type: String },
+              postalcode: { type: String },
+              tmurl: { type: String },
+              venuename: { type: String },
+            }
+          ],
     },
     { timestamps: true }
 );

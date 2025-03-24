@@ -12,4 +12,7 @@ router.post('/login', authController.login);
 router.get('/profile', authMiddleware, authController.getProfile);
 router.put('/profile', authMiddleware, authController.updateProfile);
 
+// Route to save events
+router.post('/saveEvent', authMiddleware, authController.saveEvent);
+
 module.exports = router;

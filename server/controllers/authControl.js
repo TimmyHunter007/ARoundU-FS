@@ -148,3 +148,49 @@ exports.updateProfile = async (req, res) => {
         return res.status(500).json({ error: 'Server error' });
     }
 };
+
+// ---------------------- SAVE EVENTS ----------------------
+exports.saveEvent = async (req, res) => {
+    try {
+        // Expecting the event object to be sent from the frontend
+        const { event } = req.body;
+        if (!event || !event.id) {
+            return res.status(400).json({ error: 'Invalid event data' });
+        }
+
+        // Find the user using req.userId (set by your auth middleware)
+        const user = await User.findById(req.userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Check if the event is already saved to prevent duplicates
+        if (user.savedEvents.some(e => e.eventId === event.id)) {
+            return res.status(400).json({ error: 'Event already saved' });
+        }
+
+        user.savedEvents.push({
+            eventId: event.id,
+            name: event.name,
+            date: event.date,
+            time: event.time,
+            description: event.description,
+            address: event.address,
+            city: event.city,
+            stateCode: event.stateCode,
+            postalcode: event.postalcode,
+            tmurl: event.tmurl,
+            venuename: event.venuename,
+        });
+
+        await user.save();
+
+        return res.json({
+            message: 'Event saved successfully',
+            savedEvents: user.savedEvents,
+        });
+    } catch (error) {
+        console.error('Save Event Error:', error);
+        return res.status(500).json({ error: 'Server error' });
+    }
+    };

@@ -407,6 +407,39 @@ function formatDateTime(dateStr, timeStr) {
 }
 
 /**
+ * Save events to the user's profile.
+ * @param {Object} event - The event object to save.
+ */
+async function saveEventToProfile(event) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please log in to save events.');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/profile/save-event', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ event })
+        });
+        const result = await response.json();
+        if (!response.ok) {
+            alert(result.error || 'Error saving event');
+        } else {
+            alert('Event saved to your profile!');
+            // Optionally, update the UI to reflect the saved status.
+        }
+    } catch (err) {
+        console.error(err);
+        alert('Server error');
+    }
+}
+
+/**
  * Fetch events from the server based on location, radius, and optional filters.
  * Updates the map markers and displays event cards.
  */
@@ -473,9 +506,18 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
                       openModal(event);
                   });
 
+                  // Save event
+                  const saveButton = document.createElement("button");
+                  saveButton.className = "save-event-btn";
+                  saveButton.innerText = "Save Event";
+                  saveButton.addEventListener("click", () => {
+                      saveEventToProfile(event);
+                  });
+
                   // Append the content and button to the event card.
                   eventCard.appendChild(cardContent);
                   eventCard.appendChild(readMoreButton);
+                  eventCard.appendChild(saveButton);
                   eventsContainer.appendChild(eventCard);
               });
               // Adjust the map view to include all markers.

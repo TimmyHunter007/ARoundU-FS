@@ -169,3 +169,51 @@ function setupHomeAndLogoutDropdown() {
         window.location.href = 'index.html';
     });
 }
+
+/**
+ * Load saved events for the logged-in user.
+ */
+async function loadSavedEvents() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        document.getElementById('saved-events').innerHTML = '<p>Please log in to view saved events.</p>';
+        return;
+    }
+    
+    try {
+        // Assuming you add an endpoint to get the full profile with saved events.
+        const response = await fetch('/api/auth/profile', {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        const user = await response.json();
+        if (user.savedEvents && user.savedEvents.length > 0) {
+            const container = document.getElementById('saved-events');
+            container.innerHTML = ''; // Clear any existing content.
+            user.savedEvents.forEach((event) => {
+                // Create event card similar to the ones in events-container.
+                const eventCard = document.createElement("div");
+                eventCard.className = "card";
+                eventCard.innerHTML = `
+                    <div class="card-content">
+                        <h3>${event.name}</h3>
+                        <hr>
+                        <h4>Time: ${formatDateTime(event.date, event.time)}</h4>
+                        <p>${event.description}</p>
+                        <p>Location: ${event.address} ${event.city}, ${event.stateCode} - ${event.postalcode}</p>
+                    </div>
+                `;
+                container.appendChild(eventCard);
+            });
+        } else {
+            document.getElementById('saved-events').innerHTML = '<p>No events saved yet.</p>';
+        }
+    } catch (err) {
+        console.error(err);
+        document.getElementById('saved-events').innerHTML = '<p>Error loading saved events.</p>';
+    }
+}
+
+// Call this function on page load (for example, at the end of your DOMContentLoaded event)
+document.addEventListener('DOMContentLoaded', () => {
+    loadSavedEvents();
+});
