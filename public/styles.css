@@ -530,6 +530,25 @@ body {
   background-color: #123939;
 }
 
+.ticket-button-profile {
+  position: absolute;
+  top: 17px;
+  left: 17px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.ticket-button-profile:hover {
+  background-color: #123939;
+}
+
 /* ======================================================================
    Profile Page Styles
    ====================================================================== */
