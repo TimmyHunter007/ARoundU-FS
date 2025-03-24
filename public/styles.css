@@ -534,34 +534,106 @@ body {
    Profile Page Styles
    ====================================================================== */
 
-.profile-page-container {
-  min-height: 80vh; 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  background-color: #f4f4f4; 
-}
-
-.profile-actions {
-  margin-bottom: 2rem;
-}
-
-.profile-container {
-  background-color: #fff;
-  padding: 2rem;
-  border-radius: 10px;
-  max-width: 500px;
-  width: 100%; /* Ensures it shrinks on mobile */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.profile-container h2 {
-  margin-top: 0;
-}
-
-.profile-buttons button {
-  margin: 0 8px;
-}
+   .profile-page-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    min-height: 80vh;
+  }
+  
+  /* Profile Details Section */
+  .profile-container {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    background-color: var(--background-light);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .profile-container h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+  }
+  
+  .profile-container h3 {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+  }
+  
+  .signup-form .form-row {
+    margin-bottom: 15px;
+  }
+  
+  .signup-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--text-color);
+  }
+  
+  .signup-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #fafafa;
+    transition: all 0.3s ease;
+  }
+  
+  .signup-form input:focus {
+    border-color: var(--primary-color);
+    background-color: white;
+    outline: none;
+    box-shadow: 0 0 8px rgba(184, 92, 48, 0.3);
+  }
+  
+  .signup-form button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signup-form button[type="submit"]:hover {
+    background-color: var(--hover-color);
+  }
+  
+  /* Saved Events Section */
+  .saved-events-container {
+    flex: 2;
+    min-width: 300px;
+    background-color: var(--background-light);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .saved-events-container h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+  }
+  
+  .saved-events {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
 
 /* ======================================================================
    Dropdown Styles
