@@ -192,7 +192,7 @@ async function loadSavedEvents() {
             user.savedEvents.forEach((event) => {
                 // Create event card similar to the ones in events-container.
                 const eventCard = document.createElement("div");
-                eventCard.className = "card";
+                eventCard.className = "event-card-profile";
                 eventCard.innerHTML = `
                     <div class="card-content">
                         <h3>${event.name}</h3>

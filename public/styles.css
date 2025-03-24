@@ -635,6 +635,52 @@ body {
     gap: 15px;
   }
 
+  /* Event Card Styling */
+.event-card-profile {
+  background-color: var(--background-light);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card-profile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.event-card-profile h3 {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  margin: 16px;
+}
+
+.event-card-profile hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 0 16px;
+}
+
+.event-card-profile p {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  margin: 8px 16px;
+}
+
+.event-card-profile h4 {
+  font-size: 1rem;
+  color: var(--secondary-color);
+  margin: 8px 16px;
+}
+
+/* Add spacing between the card content and the bottom */
+.event-card-profile .card-content {
+  padding-bottom: 16px;
+}
+
 /* ======================================================================
    Dropdown Styles
    ====================================================================== */
