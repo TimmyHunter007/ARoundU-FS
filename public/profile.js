@@ -195,11 +195,17 @@ async function loadSavedEvents() {
                 eventCard.className = "event-card-profile";
                 eventCard.innerHTML = `
                     <div class="card-content">
-                        <h3>${event.name}</h3>
+                        <h2>${event.name}</h2>
+                        <h3 style="text-align: center;">${formatDateTime(event.date, event.time)}</h3>
+                        <a class="ticket-button" href="${event.tmurl}" target="_blank">Buy Ticket</a>
                         <hr>
-                        <h4>Time: ${formatDateTime(event.date, event.time)}</h4>
+                        <h3>Event Details</h3>
                         <p>${event.description}</p>
-                        <p>Location: ${event.address} ${event.city}, ${event.stateCode} - ${event.postalcode}</p>
+                        <h3>Location</h3>
+                        <p>${event.venuename}<br>${event.address} ${event.city}, ${event.stateCode} ${event.postalcode}</p>
+                        <hr>
+                        <h3>TESTING AREA | WILL BE REMOVED</h3>
+                        <p>Ticketmaster Event ID: ${event.id}</p>
                     </div>
                 `;
                 container.appendChild(eventCard);
