@@ -684,8 +684,6 @@ body {
 /* Card Content with fading effect */
 .card-content-profile {
   max-height: 1500px; /* Restrict visible content */
-  overflow: hidden;
-  position: relative;
 }
 
 .card-content-profile::after {
@@ -694,8 +692,6 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 50px; /* Fading effect */
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), white);
   pointer-events: none;
 }
 
