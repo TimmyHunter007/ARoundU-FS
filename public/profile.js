@@ -195,9 +195,8 @@ async function loadSavedEvents() {
                 eventCard.className = "event-card-profile";
                 eventCard.innerHTML = `
                     <div class="card-content-profile">
-                        <h3>${event.name}</h3>
+                        <h3><a href="${event.tmurl}" target="_blank">${event.name}</a></h3>
                         <h4 style="text-align: center;">${formatDateTime(event.date, event.time)}</h4>
-                        <a class="ticket-button-profile" href="${event.tmurl}" target="_blank">Buy Ticket</a>
                         <hr>
                         <h4>Event Details</h4>
                         <p>${event.description}</p>
