@@ -431,7 +431,6 @@ async function saveEventToProfile(event) {
             alert(result.error || 'Error saving event');
         } else {
             alert('Event saved to your profile!');
-            // Optionally, update the UI to reflect the saved status.
         }
     } catch (err) {
         console.error(err);
