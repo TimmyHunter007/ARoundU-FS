@@ -418,7 +418,7 @@ async function saveEventToProfile(event) {
     }
     
     try {
-        const response = await fetch('/api/profile/save-event', {
+        const response = await fetch('/api/auth/save-event', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
