@@ -287,7 +287,7 @@ body {
 }
 
 .read-more-btn:hover {
-  background-color: #123939; /* Darker Teal */
+  background-color: var(--hover-color);
 }
 
 /* ======================================================================
@@ -652,6 +652,20 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
+  }
+
+  .save-event-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .save-event-btn:hover {
+    background-color: var(--hover-color);
   }
 
   /* Event Card Styling */
