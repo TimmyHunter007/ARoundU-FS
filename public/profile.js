@@ -206,12 +206,55 @@ async function loadSavedEvents() {
                 `;
                 container.appendChild(eventCard);
             });
+
+            // Add event listeners to all "Remove" buttons
+            const removeButtons = document.querySelectorAll('.remove-event-btn');
+            removeButtons.forEach((button) => {
+                button.addEventListener('click', async (e) => {
+                    const eventId = e.target.getAttribute('data-event-id');
+                    await removeSavedEvent(eventId);
+                    loadSavedEvents(); // Reload events after removal
+                });
+            });
         } else {
             document.getElementById('saved-events').innerHTML = '<p>No events saved yet.</p>';
         }
     } catch (err) {
         console.error(err);
         document.getElementById('saved-events').innerHTML = '<p>Error loading saved events.</p>';
+    }
+}
+
+/**
+ * Delete saved events for the logged-in user.
+ */
+
+async function removeSavedEvent(eventId) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('You must be logged in to remove events.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/auth/remove-event`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ eventId })
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            alert(result.message || 'Event removed successfully.');
+        } else {
+            alert(result.error || 'Failed to remove event.');
+        }
+    } catch (err) {
+        console.error(err);
+        alert('Error removing event.');
     }
 }
 

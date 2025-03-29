@@ -15,4 +15,7 @@ router.put('/profile', authMiddleware, authController.updateProfile);
 // Route to save events
 router.post('/save-event', authMiddleware, authController.saveEvent);
 
+// Route to remove a saved event
+router.delete('/remove-event', authMiddleware, authController.removeEvent);
+
 module.exports = router;

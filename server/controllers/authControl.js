@@ -194,3 +194,31 @@ exports.saveEvent = async (req, res) => {
         return res.status(500).json({ error: 'Server error' });
     }
     };
+
+// ---------------------- SAVE EVENTS ----------------------
+    exports.removeEvent = async (req, res) => {
+        const userId = req.user.id; // Extract user ID from the authenticated request
+        const { eventId } = req.body; // Extract event ID from the request body
+    
+        if (!eventId) {
+            return res.status(400).json({ error: 'Event ID is required.' });
+        }
+    
+        try {
+            // Remove the event from the user's saved events
+            const user = await User.findByIdAndUpdate(
+                userId,
+                { $pull: { savedEvents: { id: eventId } } }, // Remove the event with the matching ID
+                { new: true } // Return the updated user document
+            );
+    
+            if (!user) {
+                return res.status(404).json({ error: 'User not found.' });
+            }
+    
+            res.json({ message: 'Event removed successfully.', savedEvents: user.savedEvents });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to remove event.' });
+        }
+    };
