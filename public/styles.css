@@ -23,6 +23,7 @@ body {
   --hover-color: #0a9396; /* Slightly darker teal for hover effects */
   --error-color: #ae2012; /* Red for error messages */
   --success-color: #2a9d8f; /* Green for success messages */
+  --card-gb-color: #e9ecef; /* Light gray for card backgrounds */
 }
 
 /* ======================================================================
@@ -208,7 +209,7 @@ body {
 
 /* Card Base */
 .card {
-  background-color: var(--background-light);
+  background-color: var(--event-card-gb-color);
   padding: 16px;
   border-radius: 12px;
   border: 1px solid var(--border-color);
@@ -672,7 +673,7 @@ body {
 
 /* Event Card Styling */
 .event-card-profile {
-  background-color: var(--background-light);
+  background-color: var(--event-card-gb-color);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
