@@ -728,6 +728,12 @@ body {
   pointer-events: none;
 }
 
+.profile-event-card-a {
+  text-decoration: none;
+  color: var(--text-color);
+  display: block;
+}
+
 /* ======================================================================
    Dropdown Styles
    ====================================================================== */

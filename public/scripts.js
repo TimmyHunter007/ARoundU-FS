@@ -501,6 +501,7 @@ function fetchEvents(latitude, longitude, radius, filters = {}) {
                   const readMoreButton = document.createElement("button");
                   readMoreButton.className = "read-more-btn";
                   readMoreButton.innerText = "Read More";
+                  readMoreButton.style.marginBottom = "10px";
                   readMoreButton.addEventListener("click", () => {
                       openModal(event);
                   });
