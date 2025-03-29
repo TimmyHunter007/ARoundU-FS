@@ -9,18 +9,20 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
+  background-color: var(--background-light);
+  color: var(--text-color);
 }
 
-/* CSS Variables for Colors and Common Values */
+/* Updated CSS Variables for an Accessible Color Scheme */
 :root {
-  --primary-color: #0072B2; /* Blue - offers good contrast and is color-blind friendly */
-  --secondary-color: #E69F00; /* Orange - highly distinguishable alongside blue */
-  --background-light: #ffffff;
-  --text-color: #333;
-  --border-color: #ddd;
-  --hover-color: #005F8C; /* A darker shade of the primary blue for hover effects */
+  --primary-color: #005f73; /* Teal - Accessible and visually appealing */
+  --secondary-color: #94d2bd; /* Light Teal - Complements the primary color */
+  --background-light: #fefae0; /* Soft cream background for better readability */
+  --text-color: #001219; /* Dark blue-gray for high contrast text */
+  --border-color: #e9ecef; /* Light gray for subtle borders */
+  --hover-color: #0a9396; /* Slightly darker teal for hover effects */
+  --error-color: #ae2012; /* Red for error messages */
+  --success-color: #2a9d8f; /* Green for success messages */
 }
 
 /* ======================================================================
@@ -224,7 +226,7 @@ body {
 }
 
 .card h3 {
-  color: var(--text-color);
+  color: var(--primary-color);
   font-size: 1.3rem;
   margin-bottom: 10px;
 }
@@ -277,8 +279,8 @@ body {
 
 /* Read More Button */
 .read-more-btn {
-  background-color: var(--secondary-color);
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--background-light);
   border: none;
   padding: 10px 16px;
   border-radius: 8px;
@@ -553,122 +555,122 @@ body {
    Profile Page Styles
    ====================================================================== */
 
-   .profile-page-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 20px;
-    background-color: #f4f4f4;
-    min-height: 80vh;
-  }
-  
-  /* Profile Details Section */
-  .profile-container {
-    flex: 1;
-    min-width: 300px;
-    max-width: 400px;
-    background-color: var(--background-light);
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
-  
-  .profile-container h2 {
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 5px;
-  }
-  
-  .profile-container h3 {
-    margin-top: 20px;
-    font-size: 1.2rem;
-    color: var(--secondary-color);
-  }
-  
-  .signup-form .form-row {
-    margin-bottom: 15px;
-  }
-  
-  .signup-form label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 5px;
-    color: var(--text-color);
-  }
-  
-  .signup-form input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background-color: #fafafa;
-    transition: all 0.3s ease;
-  }
-  
-  .signup-form input:focus {
-    border-color: var(--primary-color);
-    background-color: white;
-    outline: none;
-    box-shadow: 0 0 8px rgba(184, 92, 48, 0.3);
-  }
-  
-  .signup-form button[type="submit"] {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 12px 16px;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .signup-form button[type="submit"]:hover {
-    background-color: var(--hover-color);
-  }
-  
-  /* Saved Events Section */
-  .saved-events-container {
-    flex: 2;
-    min-width: 300px;
-    background-color: var(--background-light);
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
-  
-  .saved-events-container h2 {
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 5px;
-  }
-  
-  .saved-events {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
+.profile-page-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f4f4f4;
+  min-height: 80vh;
+}
 
-  .save-event-btn {
-    background-color: var(--secondary-color);
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .save-event-btn:hover {
-    background-color: var(--hover-color);
-  }
+/* Profile Details Section */
+.profile-container {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  background-color: var(--background-light);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
 
-  /* Event Card Styling */
+.profile-container h2 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 5px;
+}
+
+.profile-container h3 {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: var(--secondary-color);
+}
+
+.signup-form .form-row {
+  margin-bottom: 15px;
+}
+
+.signup-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: var(--text-color);
+}
+
+.signup-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: #fafafa;
+  transition: all 0.3s ease;
+}
+
+.signup-form input:focus {
+  border-color: var(--primary-color);
+  background-color: white;
+  outline: none;
+  box-shadow: 0 0 8px rgba(184, 92, 48, 0.3);
+}
+
+.signup-form button[type="submit"] {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.signup-form button[type="submit"]:hover {
+  background-color: var(--hover-color);
+}
+
+/* Saved Events Section */
+.saved-events-container {
+  flex: 2;
+  min-width: 300px;
+  background-color: var(--background-light);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.saved-events-container h2 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 5px;
+}
+
+.saved-events {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.save-event-btn {
+  background-color: var(--primary-color);
+  color: var(--background-light);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-event-btn:hover {
+  background-color: var(--hover-color);
+}
+
+/* Event Card Styling */
 .event-card-profile {
   background-color: var(--background-light);
   border: 1px solid var(--border-color);
@@ -737,60 +739,59 @@ body {
 /* ======================================================================
    Dropdown Styles
    ====================================================================== */
-   .dropdown {
-    position: absolute;
-    right: 0px;
-    top: 140px;
-    display: inline-block; /* So the dropdown can sit side by side in the header */
-    margin-right: 20px;    /* Adjust spacing as needed */
-  }
-  
-  .dropbtn {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 12px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .dropbtn:hover {
-    background-color: var(--hover-color);
-  }
-  
-  /* Dropdown content (hidden by default) */
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: var(--background-light);
-    min-width: 120px; /* Adjust width to taste */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-    border-radius: 8px;
-    overflow: hidden;
-    right: 0; /* Align dropdown to the right edge if you like */
-  }
+.dropdown {
+  position: absolute;
+  right: 0px;
+  top: 140px;
+  display: inline-block; /* So the dropdown can sit side by side in the header */
+  margin-right: 20px;    /* Adjust spacing as needed */
+}
 
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
-  /* Buttons or links inside the dropdown */
-  .dropdown-content button {
-    background: none;
-    color: var(--text-color);
-    padding: 12px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-family: 'Poppins', sans-serif; /* keep your existing font */
-  }
-  
-  .dropdown-content button:hover {
-    background-color: var(--border-color);
-  }
-  
+.dropbtn {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dropbtn:hover {
+  background-color: var(--hover-color);
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--background-light);
+  min-width: 120px; /* Adjust width to taste */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  right: 0; /* Align dropdown to the right edge if you like */
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Buttons or links inside the dropdown */
+.dropdown-content button {
+  background: none;
+  color: var(--text-color);
+  padding: 12px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Poppins', sans-serif; /* keep your existing font */
+}
+
+.dropdown-content button:hover {
+  background-color: var(--border-color);
+}
