@@ -668,6 +668,21 @@ body {
     background-color: var(--hover-color);
   }
 
+  /* Delete event button */
+  .delete-event-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .delete-event-btn:hover {
+    background-color: var(--hover-color);
+  }
+
   /* Event Card Styling */
 .event-card-profile {
   background-color: var(--background-light);

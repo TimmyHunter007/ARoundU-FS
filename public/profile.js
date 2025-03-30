@@ -202,6 +202,7 @@ async function loadSavedEvents() {
                         <p>${event.description}</p>
                         <h4>Location</h4>
                         <p>${event.venuename}<br>${event.address} ${event.city}, ${event.stateCode} ${event.postalcode}</p>
+                        <button class="remove-event-btn" data-event-id="${event.eventId}">Remove</button>
                     </div>
                 `;
                 container.appendChild(eventCard);
